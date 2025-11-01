@@ -28,12 +28,11 @@ class HeroSectionController extends Controller
     $hero = HeroSection::first() ?? new HeroSection();
 
     // Imagen
-    if ($request->hasFile('image')) {
-        if ($hero->image) {
-            Storage::disk('public')->delete($hero->image);
-        }
-        $data['image'] = $request->file('image')->store('hero', 'public');
-    }
+   if ($request->hasFile('image')) {
+    $filename = $request->file('image')->getClientOriginalName();
+    $request->file('image')->move(public_path('hero'), $filename);
+    $data['image'] = 'hero/'.$filename;
+}
 
     // Guardar (create o update sobre la misma instancia)
     $hero->fill($data);
