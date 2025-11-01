@@ -32,7 +32,7 @@
 
         <!-- 📍 Contacto -->
         <li class="nav-item">
-          <a class="nav-link fw-semibold text-dark" href="{{ route('contact.index') }}">
+          <a class="nav-link fw-semibold text-dark" href="{{ route('public.contact.index') }}">
             <i class="bi bi-envelope me-1 text-danger"></i> Contacto
           </a>
         </li>

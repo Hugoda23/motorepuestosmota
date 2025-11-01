@@ -1,0 +1,45 @@
+/* 🎨 Estilos Honda para la sección de servicios */
+body {
+  background-color: #f8fafc;
+  font-family: 'Poppins', sans-serif;
+}
+
+.service-card {
+  transition: all 0.3s ease;
+  background: #fff;
+  border-radius: 20px;
+}
+
+.service-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0.8rem 1.5rem rgba(0, 0, 0, 0.1);
+}
+
+.icon-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+}
+
+h2.fw-bold {
+  color: #e10600;
+}
+
+ul li {
+  margin-bottom: 5px;
+}
+
+ul li::before {
+  content: "• ";
+  color: #e10600;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .service-card {
+    margin-bottom: 1rem;
+  }
+}

@@ -5,13 +5,13 @@
   ================================== -->
   <section id="hero" class="position-relative overflow-hidden bg-light">
     <div class="container position-relative py-5">
-      @if(!empty($hero) && $hero->image)
-        <div class="position-absolute top-0 start-0 w-100 h-100">
-          <img src="{{ asset('storage/'.$hero->image) }}" 
-               alt="Hero Image" 
-               class="w-100 h-100 object-fit-cover opacity-75">
-        </div>
-      @endif
+     @if(!empty($hero) && !empty($hero->image) && Storage::disk('public')->exists($hero->image))
+  <div class="position-absolute top-0 start-0 w-100 h-100">
+    <img src="{{ asset('storage/'.$hero->image) }}" 
+         alt="Hero Image" 
+         class="w-100 h-100 object-fit-cover opacity-75">
+  </div>
+@endif
 
       <div class="position-relative text-center text-white py-5" style="z-index: 2;">
         <h1 class="display-4 fw-bold text-uppercase mb-3 animate__animated animate__fadeInDown">

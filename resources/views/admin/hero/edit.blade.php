@@ -1,6 +1,9 @@
-<x-admin.layout title="Editar Hero Section" header="Hero Section">
 
-  <div class="card shadow-sm">
+
+@extends('layouts.app')
+
+@section('content')
+<div class="card shadow-sm">
     <div class="card-body">
       <h5 class="card-title mb-3">Editar sección principal</h5>
 
@@ -28,5 +31,4 @@
       </form>
     </div>
   </div>
-
-</x-admin.layout>
+@endsection

@@ -10,6 +10,8 @@ use App\Http\Controllers\Admin\FeaturedProductController;
 use App\Http\Controllers\Public\ContactController;
 use App\Http\Controllers\Admin\CitaController;
 use App\Http\Controllers\Admin\DiaDisponibleController;
+use App\Http\Controllers\Auth\LoginController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -35,10 +37,20 @@ Route::get('/producto/{slug}', [PublicController::class, 'showProduct'])
 Route::get('/productos', [PublicController::class, 'publicView'])
     ->name('public.products.index');
 
-// Página de contacto
-Route::get('/contacto', [ContactController::class, 'index'])->name('public.contact');
+// Página de Promociones públicas
+Route::get('/promociones', function () {
+    return view('public.promociones');
+})->name('public.promociones');
+
+// Página de contacto pública
+Route::get('/contacto', [ContactController::class, 'index'])->name('public.contact.index');
 Route::post('/contacto', [ContactController::class, 'store'])->name('public.contact.store');
 
+
+// Login
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login'])->name('login.post');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // Citas (frontend con FullCalendar)
 Route::get('/citas', [CitaController::class, 'index'])->name('public.citas.index');
@@ -55,35 +67,34 @@ Route::post('/dias-disponibles', [DiaDisponibleController::class, 'store'])->nam
 |--------------------------------------------------------------------------
 |
 | Todas las rutas del panel de administración (dashboard).
-| Aquí se recomienda aplicar un middleware de autenticación.
+| Se recomienda protegerlas con middleware de autenticación.
 |
 */
 
 Route::prefix('admin')->name('admin.')->group(function () {
-    
-    // Dashboard principal
+
+    // 🏠 Dashboard principal
     Route::view('/', 'admin.dashboard')->name('dashboard');
 
-    // HERO Section
+    // 🎯 HERO Section
     Route::get('/hero/edit', [HeroSectionController::class, 'edit'])->name('hero.edit');
     Route::post('/hero/update', [HeroSectionController::class, 'update'])->name('hero.update');
 
-    // Categorías públicas
+    // 🧩 Categorías públicas
     Route::resource('categories', CategoryPublicController::class)->names('categories');
 
-    // Subcategorías públicas
+    // 🪪 Subcategorías públicas
     Route::resource('subcategories', SubcategoryPublicController::class)->names('subcategories');
 
-    // Productos públicos
+    // 🛒 Productos públicos
     Route::resource('products', ProductPublicController::class)->names('products');
 
-    // Productos destacados
+    // ⭐ Productos destacados
     Route::get('/featured', [FeaturedProductController::class, 'index'])->name('featured.index');
     Route::post('/featured/store', [FeaturedProductController::class, 'store'])->name('featured.store');
     Route::put('/featured/{featured}/toggle', [FeaturedProductController::class, 'toggle'])->name('featured.toggle');
     Route::delete('/featured/{featured}', [FeaturedProductController::class, 'destroy'])->name('featured.destroy');
 });
-
 
 /*
 |--------------------------------------------------------------------------

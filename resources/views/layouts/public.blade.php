@@ -5,13 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title', 'Motorepuestos Mota')</title>
 
-    <!-- ✅ Estilos principales -->
+    <!-- =============================
+         🎨 Estilos principales
+    ============================== -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-    <!-- ✅ Tus estilos personalizados -->
-    <link rel="stylesheet" href="{{ asset('css/public/contact.css') }}">
 
-    <!-- ✅ Estilos básicos del layout -->
+    <!-- =============================
+         💅 Estilos personalizados
+    ============================== -->
+    <link rel="stylesheet" href="{{ asset('css/public/contact.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/public/login.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/public/servicios.css') }}">
+
+
+    <!-- =============================
+         ⚙️ Estilos base del layout
+    ============================== -->
     <style>
         body {
             background-color: #f9fafb;
@@ -32,36 +42,67 @@
         }
     </style>
 </head>
-<body>
 
-    <!-- 🔹 Navbar simple -->
-    <nav class="navbar navbar-expand-lg py-3">
+<body>
+    <!-- =============================
+         🔺 Navbar principal
+    ============================== -->
+    <nav class="navbar navbar-expand-lg py-3 shadow-sm">
         <div class="container">
+            <!-- 🔹 Logo -->
             <a href="{{ url('/') }}" class="navbar-brand d-flex align-items-center">
-                <img src="{{ asset('assets/img/logo-mota.png') }}" style="height:45px;" alt="Motorepuestos Mota">
+                <img src="{{ asset('assets/img/logo-mota.png') }}" alt="Motorepuestos Mota" style="height:45px;">
             </a>
 
-            <div class="collapse navbar-collapse">
+            <!-- 🔹 Botón responsive -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarPublic"
+                aria-controls="navbarPublic" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- 🔹 Enlaces -->
+            <div class="collapse navbar-collapse" id="navbarPublic">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a href="{{ url('/') }}" class="nav-link fw-semibold text-dark">Inicio</a></li>
-                    <li class="nav-item"><a href="{{ url('/#categorias') }}" class="nav-link fw-semibold text-dark">Categorías</a></li>
-                    <li class="nav-item"><a href="{{ url('/contacto') }}" class="nav-link fw-semibold text-dark">Contacto</a></li>
+                    <li class="nav-item">
+                        <a href="{{ url('/') }}" class="nav-link fw-semibold text-dark">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url('/#categorias') }}" class="nav-link fw-semibold text-dark">Categorías</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url('/contacto') }}" class="nav-link fw-semibold text-dark">Contacto</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('login') }}" class="btn btn-sm btn-outline-danger fw-semibold ms-lg-3">
+                            <i class="bi bi-person-circle me-1"></i> Ingresar
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <!-- 🔹 Contenido dinámico -->
-    <main class="py-4">
+    <!-- =============================
+         📦 Contenido dinámico
+    ============================== -->
+    <main class="py-5">
         @yield('content')
     </main>
 
-    <!-- 🔹 Footer -->
+    <!-- =============================
+         ⚙️ Footer
+    ============================== -->
     <footer class="text-center py-4 border-top mt-5">
-        <small>© {{ date('Y') }} Motorepuestos Mota — Todos los derechos reservados.</small>
+        <small class="text-muted">
+            © {{ date('Y') }} Motorepuestos Mota — Todos los derechos reservados.
+        </small>
     </footer>
 
-    <!-- ✅ Scripts de Bootstrap -->
+    <!-- =============================
+         ⚡ Scripts globales
+    ============================== -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    @stack('scripts')
 </body>
 </html>

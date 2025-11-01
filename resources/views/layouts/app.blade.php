@@ -20,18 +20,17 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
   <!-- Custom Styles via Vite -->
-  @vite([
-      'resources/css/app.css',
-      'resources/css/public.css',
-      'resources/css/categories.css',
-      'resources/js/app.js',
-      'resources/js/categories.js'
-  ])
+<!-- Custom Styles -->
+<link rel="stylesheet" href="{{ asset('css/app.css') }}">
+<link rel="stylesheet" href="{{ asset('css/public.css') }}">
+<link rel="stylesheet" href="{{ asset('css/public/categories.css') }}">
+<script src="{{ asset('js/app.js') }}" defer></script>
+<script src="{{ asset('js/categories.js') }}" defer></script>
+
 
   <!-- Estilos adicionales de vistas -->
   @stack('styles')
 
-  @livewireStyles
 
   <style>
     body {
