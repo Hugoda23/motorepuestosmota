@@ -1,0 +1,32 @@
+#hero {
+  position: relative;
+  min-height: 80vh;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#hero img {
+  object-fit: cover;
+  filter: brightness(0.85);
+}
+
+#hero h1 {
+  text-shadow: 0 3px 8px rgba(0, 0, 0, 0.5);
+}
+
+#hero p {
+  font-size: 1.2rem;
+}
+
+#hero .btn-danger {
+  background-color: #dc2626;
+  border-color: #dc2626;
+  transition: all 0.3s ease;
+}
+
+#hero .btn-danger:hover {
+  background-color: #b91c1c;
+  transform: translateY(-3px);
+}

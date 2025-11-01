@@ -1,0 +1,15 @@
+#destacados {
+  background-color: #fff;
+}
+
+#destacados h2 {
+  color: #dc2626;
+}
+
+#destacados .card {
+  transition: transform 0.3s ease;
+}
+
+#destacados .card:hover {
+  transform: translateY(-5px);
+}

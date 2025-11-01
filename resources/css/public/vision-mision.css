@@ -1,0 +1,12 @@
+#vision-mision {
+  position: relative;
+  color: #fff;
+}
+
+#vision-mision .bg-white {
+  transition: transform 0.3s ease;
+}
+
+#vision-mision .bg-white:hover {
+  transform: translateY(-5px);
+}

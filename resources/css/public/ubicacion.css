@@ -1,0 +1,14 @@
+#ubicacion h2 {
+  color: #dc2626;
+}
+
+#ubicacion iframe {
+  border: 0;
+  width: 100%;
+  height: 450px;
+}
+
+#ubicacion p {
+  color: #4b5563;
+  line-height: 1.6;
+}

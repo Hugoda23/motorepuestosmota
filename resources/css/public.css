@@ -1,0 +1,17 @@
+body {
+  background-color: #f9fafb;
+  font-family: 'Poppins', sans-serif;
+}
+
+header.navbar {
+  background-color: #fff;
+  border-bottom: 2px solid #dc2626;
+}
+
+.nav-link {
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+  color: #dc2626 !important;
+}
