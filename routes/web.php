@@ -7,9 +7,9 @@ use App\Http\Controllers\Admin\CategoryPublicController;
 use App\Http\Controllers\Admin\SubcategoryPublicController;
 use App\Http\Controllers\Admin\ProductPublicController;
 use App\Http\Controllers\Admin\FeaturedProductController;
-use App\Http\Controllers\ContactController;
-use App\Http\Controllers\CitaController;
-use App\Http\Controllers\DiaDisponibleController;
+use App\Http\Controllers\Public\ContactController;
+use App\Http\Controllers\Admin\CitaController;
+use App\Http\Controllers\Admin\DiaDisponibleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,7 +37,8 @@ Route::get('/productos', [PublicController::class, 'publicView'])
 
 // Página de contacto
 Route::get('/contacto', [ContactController::class, 'index'])->name('public.contact');
-Route::post('/contacto', [ContactController::class, 'send'])->name('public.contact.send');
+Route::post('/contacto', [ContactController::class, 'store'])->name('public.contact.store');
+
 
 // Citas (frontend con FullCalendar)
 Route::get('/citas', [CitaController::class, 'index'])->name('public.citas.index');
