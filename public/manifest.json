@@ -1,4 +1,26 @@
 {
+  "_axios.js": {
+    "file": "js/axios.js"
+  },
+  "resources/css/admin.css": {
+    "file": "css/admin.css",
+    "isEntry": true,
+    "src": "resources/css/admin.css"
+  },
+  "resources/css/app.css": {
+    "file": "css/app.css",
+    "src": "resources/js/app.css"
+  },
+  "resources/css/public.css": {
+    "file": "css/public.css",
+    "isEntry": true,
+    "src": "resources/css/public.css"
+  },
+  "resources/js/admin.js": {
+    "file": "js/admin.js",
+    "isEntry": true,
+    "src": "resources/js/admin.js"
+  },
   "resources/js/app.css": {
     "file": "css/app.css",
     "src": "resources/js/app.css"
@@ -7,8 +29,19 @@
     "css": [
       "css/app.css"
     ],
-    "file": "js/app.js",
+    "file": "js/app2.js",
+    "imports": [
+      "_axios.js"
+    ],
     "isEntry": true,
     "src": "resources/js/app.js"
+  },
+  "resources/js/bootstrap.js": {
+    "file": "js/bootstrap.js",
+    "imports": [
+      "_axios.js"
+    ],
+    "isEntry": true,
+    "src": "resources/js/bootstrap.js"
   }
 }

@@ -35,7 +35,10 @@ export default defineConfig({
 
     // ⚒️ Compilación en carpetas separadas
     build: {
-        outDir: 'public', // salida directa en /public
+    outDir: 'public/build', 
+    manifest: true,
+    emptyOutDir: true,
+
         rollupOptions: {
             output: {
                 // Generar archivos separados en css/ y js/

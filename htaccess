@@ -1,0 +1,11 @@
+# ===============================
+# Redirect root to /public folder
+# ===============================
+
+RewriteEngine On
+
+# Evita redirección en la carpeta /public
+RewriteCond %{REQUEST_URI} !^/public/
+
+# Redirige todo hacia la carpeta /public
+RewriteRule ^(.*)$ public/$1 [L,QSA]
