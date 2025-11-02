@@ -39,17 +39,22 @@ class CategoryPublicController extends Controller
             ->with('success', 'Categoría creada correctamente.');
     }
 
-    public function destroy(CategoryPublic $categoriespublic)
-    {
-        // 🔹 Eliminar imagen si existe físicamente
-        if ($categoriespublic->image && file_exists(public_path($categoriespublic->image))) {
-            unlink(public_path($categoriespublic->image));
-        }
+  public function destroy(Request $request, $id)
+{
+    $category = CategoryPublic::findOrFail($id);
 
-        $categoriespublic->delete();
-
-        return back()->with('success', 'Categoría eliminada correctamente.');
+    if (!empty($category->image) && file_exists(public_path($category->image))) {
+        unlink(public_path($category->image));
     }
+
+    $category->delete();
+
+    return redirect()
+        ->route('admin.categoriespublic.index')
+        ->with('success', '🗑️ Categoría eliminada correctamente.');
+}
+
+
 
     public function show($id)
     {

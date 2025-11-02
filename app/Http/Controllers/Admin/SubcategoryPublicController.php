@@ -15,15 +15,14 @@ class SubcategoryPublicController extends Controller
      */
     public function index()
     {
-        // Cargar subcategorías con su categoría relacionada
         $subcategories = SubcategoryPublic::with('category')->latest()->paginate(10);
-        $categories = CategoryPublic::all(); // Para el modal de creación
+        $categories = CategoryPublic::all(); // Para el formulario o modal de creación
 
         return view('admin.subcategoriespublic.index', compact('subcategories', 'categories'));
     }
 
     /**
-     * Guardar nueva subcategoría desde el modal
+     * Guardar nueva subcategoría desde el formulario o modal
      */
     public function store(Request $request)
     {
@@ -37,40 +36,45 @@ class SubcategoryPublicController extends Controller
         // 🔹 Generar slug automáticamente
         $data['slug'] = Str::slug($data['name'], '-');
 
-        // 🔹 Guardar imagen directamente en /public/uploads/subcategoriespublic/
+        // 🔹 Guardar imagen en /public/uploads/subcategoriespublic/
         if ($request->hasFile('image')) {
             $filename = time() . '_' . Str::slug(
                 pathinfo($request->file('image')->getClientOriginalName(), PATHINFO_FILENAME)
             ) . '.' . $request->file('image')->getClientOriginalExtension();
 
-            // Crear carpeta si no existe
+            // Crear carpeta si no existe (importante en Hostinger)
             if (!file_exists(public_path('uploads/subcategoriespublic'))) {
                 mkdir(public_path('uploads/subcategoriespublic'), 0755, true);
             }
 
-            // Mover archivo
+            // Mover archivo al directorio público
             $request->file('image')->move(public_path('uploads/subcategoriespublic'), $filename);
-            $data['image'] = 'uploads/subcategoriespublic/' . $filename; // Ruta accesible por asset()
+            $data['image'] = 'uploads/subcategoriespublic/' . $filename; // ruta accesible por asset()
         }
 
         SubcategoryPublic::create($data);
 
-        return redirect()->route('admin.subcategoriespublic.index')
+        return redirect()
+            ->route('admin.subcategoriespublic.index')
             ->with('success', '✅ Subcategoría creada correctamente.');
     }
 
     /**
-     * Eliminar una subcategoría
+     * Eliminar una subcategoría (igual que en productos y categorías)
      */
-    public function destroy(SubcategoryPublic $subcategorypublic)
+    public function destroy(Request $request, $id)
     {
+        $subcategory = SubcategoryPublic::findOrFail($id);
+
         // 🔹 Eliminar imagen si existe físicamente
-        if (!empty($subcategorypublic->image) && file_exists(public_path($subcategorypublic->image))) {
-            unlink(public_path($subcategorypublic->image));
+        if (!empty($subcategory->image) && file_exists(public_path($subcategory->image))) {
+            unlink(public_path($subcategory->image));
         }
 
-        $subcategorypublic->delete();
+        $subcategory->delete();
 
-        return back()->with('success', '🗑️ Subcategoría eliminada correctamente.');
+        return redirect()
+            ->route('admin.subcategoriespublic.index')
+            ->with('success', '🗑️ Subcategoría eliminada correctamente.');
     }
 }

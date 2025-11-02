@@ -8,6 +8,7 @@ use App\Models\SubcategoryPublic;
 use App\Models\ProductPublic;
 use App\Models\HeroSection;
 use App\Models\FeaturedProduct;
+use App\Models\Promotion;
 
 class PublicController extends Controller
 {
@@ -107,5 +108,22 @@ class PublicController extends Controller
             ->get();
 
         return view('public.home2', compact('hero', 'categories', 'featured'));
+    }
+
+     public function promociones()
+    {
+        $today = now()->toDateString();
+
+        $promotions = Promotion::where('is_published', true)
+            ->where(function ($q) use ($today) {
+                $q->whereNull('start_date')->orWhere('start_date', '<=', $today);
+            })
+            ->where(function ($q) use ($today) {
+                $q->whereNull('end_date')->orWhere('end_date', '>=', $today);
+            })
+            ->latest()
+            ->get();
+
+        return view('public.promociones', compact('promotions'));
     }
 }

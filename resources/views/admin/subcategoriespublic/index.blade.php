@@ -60,12 +60,15 @@
             </td>
             <td>{{ Str::limit($sub->description ?? '—', 50, '...') }}</td>
             <td>
-              <form action="{{ route('admin.subcategoriespublic.destroy', $sub) }}" method="POST" class="d-inline" onsubmit="return confirm('¿Eliminar la subcategoría {{ $sub->name }}?')">
-                @csrf @method('DELETE')
-                <button class="btn btn-sm btn-outline-danger rounded-pill" title="Eliminar">
-                  <i class="bi bi-trash3"></i>
-                </button>
-              </form>
+              <form action="{{ route('admin.subcategoriespublic.destroy', $sub->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar esta subcategoría?')">
+    @csrf
+    @method('DELETE')
+    <button type="submit" class="btn btn-danger btn-sm">
+        <i class="bi bi-trash"></i> Eliminar
+    </button>
+</form>
+
+
             </td>
           </tr>
         @empty

@@ -1,32 +1,86 @@
-#hero {
+/* ============================
+   🎨 HERO ELEGANTE MOTA
+============================ */
+.hero-elegant {
   position: relative;
-  min-height: 80vh;
-  color: #fff;
+  min-height: 65vh; /* ocupa 65% de la altura */
+  width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  overflow: hidden;
+  color: #fff;
+  z-index: 1;
+  padding-top: 3rem;  /* 🔹 menos padding arriba */
+  padding-bottom: 3rem; /* 🔹 menos padding abajo */
+  background: linear-gradient(110deg, #0f172a 40%, #dc2626 110%);
 }
 
-#hero img {
-  object-fit: cover;
-  filter: brightness(0.85);
+
+/* Imagen flotante */
+.hero-floating-img {
+  max-height: 550px;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 25px rgba(0,0,0,0.4));
+  position: relative;
+  z-index: 2;
 }
 
-#hero h1 {
-  text-shadow: 0 3px 8px rgba(0, 0, 0, 0.5);
+/* Animación flotante */
+@keyframes floatHero {
+  0% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-20px) scale(1.03); }
+  100% { transform: translateY(0px) scale(1); }
+}
+.animate-float {
+  animation: floatHero 6s ease-in-out infinite;
 }
 
-#hero p {
-  font-size: 1.2rem;
+/* Overlay degradado */
+.hero-overlay {
+  background: linear-gradient(110deg, rgba(15,23,42,0.9) 40%, rgba(220,38,38,0.8) 110%);
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
 }
 
-#hero .btn-danger {
+/* Texto */
+.hero-elegant h1 {
+  z-index: 2;
+  text-shadow: 0 5px 15px rgba(0,0,0,0.6);
+}
+.hero-elegant p {
+  z-index: 2;
+}
+
+/* Botón */
+.hero-elegant .btn-danger {
   background-color: #dc2626;
-  border-color: #dc2626;
+  border: none;
   transition: all 0.3s ease;
 }
-
-#hero .btn-danger:hover {
+.hero-elegant .btn-danger:hover {
   background-color: #b91c1c;
   transform: translateY(-3px);
+}
+
+/* Separador (evita que tape otras secciones) */
+.hero-separator {
+  position: relative;
+  height: 100px;
+  background: transparent;
+  z-index: 0;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .hero-elegant {
+    flex-direction: column;
+    text-align: center;
+    padding: 4rem 1rem;
+  }
+  .hero-floating-img {
+    max-height: 350px;
+    margin-top: 2rem;
+  }
 }

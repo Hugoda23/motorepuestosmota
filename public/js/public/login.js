@@ -1,7 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const btn = document.querySelector('.btn-danger');
-  btn.addEventListener('click', () => {
-    btn.classList.add('active');
-    setTimeout(() => btn.classList.remove('active'), 300);
-  });
+  const mapa = document.querySelector('.map-wrapper');
+  const observer = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) mapa.classList.add('animate__zoomIn');
+      });
+    },
+    { threshold: 0.3 }
+  );
+  if (mapa) observer.observe(mapa);
 });

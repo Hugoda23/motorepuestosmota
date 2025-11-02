@@ -1,0 +1,11 @@
+.promo-card {
+  transition: all 0.3s ease;
+}
+.promo-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 1rem 1.5rem rgba(0, 0, 0, 0.1);
+}
+.promo-card img {
+  height: 210px;
+  object-fit: cover;
+}

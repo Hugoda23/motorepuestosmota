@@ -28,6 +28,10 @@ export default defineConfig({
 
                 // JS base
                 'resources/js/bootstrap.js',
+
+                 // SECCIÓN PROMOCIONES
+                'resources/css/public/promociones.css',
+                'resources/js/public/promociones.js',
             ],
             refresh: true,
         }),

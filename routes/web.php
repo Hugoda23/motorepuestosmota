@@ -11,7 +11,7 @@ use App\Http\Controllers\Public\ContactController;
 use App\Http\Controllers\Admin\CitaController;
 use App\Http\Controllers\Admin\DiaDisponibleController;
 use App\Http\Controllers\Auth\LoginController;
-
+use App\Http\Controllers\Admin\PromotionController;
 
 
 /*
@@ -39,13 +39,15 @@ Route::get('/productos', [PublicController::class, 'publicView'])
     ->name('public.products.index');
 
 // Página de Promociones públicas
-Route::get('/promociones', function () {
-    return view('public.promociones');
-})->name('public.promociones');
+Route::view('/promociones', 'public.promociones')->name('public.promociones');
 
 // Página de contacto pública
 Route::get('/contacto', [ContactController::class, 'index'])->name('public.contact.index');
 Route::post('/contacto', [ContactController::class, 'store'])->name('public.contact.store');
+// Página de Promociones públicas
+Route::get('/promociones', [App\Http\Controllers\PublicController::class, 'promociones'])
+    ->name('public.promociones');
+
 
 // Login
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -65,12 +67,9 @@ Route::post('/dias-disponibles', [DiaDisponibleController::class, 'store'])->nam
 |--------------------------------------------------------------------------
 | ⚙️ RUTAS ADMINISTRATIVAS
 |--------------------------------------------------------------------------
-|
 | Todas las rutas del panel de administración (dashboard).
 | Se recomienda protegerlas con middleware de autenticación.
-|
 */
-
 Route::prefix('admin')->name('admin.')->group(function () {
 
     // 🏠 Dashboard principal
@@ -82,6 +81,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     // 🧩 Categorías públicas
     Route::resource('categoriespublic', CategoryPublicController::class)->names('categoriespublic');
+    // (No es necesario redefinir destroy, resource ya la crea correctamente)
 
     // 🪪 Subcategorías públicas
     Route::resource('subcategoriespublic', SubcategoryPublicController::class)->names('subcategoriespublic');
@@ -90,16 +90,22 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::put('/productspublic/{productpublic}/toggle', [ProductPublicController::class, 'togglePublish'])
         ->name('productspublic.toggle');
     Route::resource('productspublic', ProductPublicController::class)->names('productspublic');
-Route::delete('/productspublic/{productpublic}', [ProductPublicController::class, 'destroy'])
-    ->name('productspublic.destroy');
-Route::post('/productspublic/{productpublic}/delete', [ProductPublicController::class, 'destroy'])
-    ->name('productspublic.delete');
+
     // ⭐ Productos destacados
     Route::get('/featured', [FeaturedProductController::class, 'index'])->name('featured.index');
     Route::post('/featured/store', [FeaturedProductController::class, 'store'])->name('featured.store');
     Route::put('/featured/{featured}/toggle', [FeaturedProductController::class, 'toggle'])->name('featured.toggle');
     Route::delete('/featured/{featured}', [FeaturedProductController::class, 'destroy'])->name('featured.destroy');
+
+    // 🏷️ Promociones
+// 🎯 Promociones
+    Route::get('/promotions', [PromotionController::class, 'index'])->name('promotions.index');
+    Route::post('/promotions/store', [PromotionController::class, 'store'])->name('promotions.store');
+    Route::put('/promotions/{promotion}/toggle', [PromotionController::class, 'toggle'])->name('promotions.toggle');
+    Route::delete('/promotions/{promotion}', [PromotionController::class, 'destroy'])->name('promotions.destroy');
 });
+
+
 
 
 /*
@@ -107,7 +113,6 @@ Route::post('/productspublic/{productpublic}/delete', [ProductPublicController::
 | 🚫 RUTA DE FALLBACK (404)
 |--------------------------------------------------------------------------
 */
-
 Route::fallback(function () {
     return response()->view('errors.404', [], 404);
 });
