@@ -60,20 +60,26 @@
             </td>
 
             <td>
-              <form action="{{ route('admin.productspublic.toggle', $p) }}" method="POST" class="d-inline">
-                @csrf @method('PUT')
-                <button class="btn btn-sm rounded-pill {{ $p->is_published ? 'btn-warning' : 'btn-success' }}" title="Publicar / Ocultar">
+              <!-- Publicar / Ocultar -->
+              <form action="{{ route('admin.productspublic.toggle', $p->id) }}" method="POST" class="d-inline">
+                @csrf
+                @method('PUT')
+                <button type="submit" class="btn btn-sm rounded-pill {{ $p->is_published ? 'btn-warning' : 'btn-success' }}" title="Publicar / Ocultar">
                   <i class="bi {{ $p->is_published ? 'bi-eye-slash' : 'bi-eye' }}"></i>
                 </button>
               </form>
 
-              <form action="{{ route('admin.productspublic.destroy', $p) }}" method="POST" class="d-inline"
-                    onsubmit="return confirm('¿Eliminar el producto {{ $p->name }}?')">
-                @csrf @method('DELETE')
-                <button class="btn btn-sm btn-outline-danger rounded-pill" title="Eliminar">
-                  <i class="bi bi-trash3"></i>
-                </button>
-              </form>
+              <!-- Eliminar -->
+           <form action="{{ route('admin.productspublic.destroy', $p->id) }}" 
+      method="POST" 
+      onsubmit="return confirm('¿Eliminar el producto {{ $p->name }}?')">
+    @csrf
+    @method('DELETE')
+    <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill">
+        <i class="bi bi-trash3"></i>
+    </button>
+</form>
+
             </td>
           </tr>
         @empty

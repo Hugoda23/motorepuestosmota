@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\DiaDisponibleController;
 use App\Http\Controllers\Auth\LoginController;
 
 
+
 /*
 |--------------------------------------------------------------------------
 | 🔹 RUTAS PÚBLICAS
@@ -45,7 +46,6 @@ Route::get('/promociones', function () {
 // Página de contacto pública
 Route::get('/contacto', [ContactController::class, 'index'])->name('public.contact.index');
 Route::post('/contacto', [ContactController::class, 'store'])->name('public.contact.store');
-
 
 // Login
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -81,22 +81,26 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/hero/update', [HeroSectionController::class, 'update'])->name('hero.update');
 
     // 🧩 Categorías públicas
-Route::resource('categoriespublic', CategoryPublicController::class)->names('categoriespublic');
+    Route::resource('categoriespublic', CategoryPublicController::class)->names('categoriespublic');
 
     // 🪪 Subcategorías públicas
     Route::resource('subcategoriespublic', SubcategoryPublicController::class)->names('subcategoriespublic');
 
-  // Productos públicos
-Route::resource('productspublic', ProductPublicController::class)->names('productspublic');
+    // 📦 Productos públicos
     Route::put('/productspublic/{productpublic}/toggle', [ProductPublicController::class, 'togglePublish'])
         ->name('productspublic.toggle');
-
+    Route::resource('productspublic', ProductPublicController::class)->names('productspublic');
+Route::delete('/productspublic/{productpublic}', [ProductPublicController::class, 'destroy'])
+    ->name('productspublic.destroy');
+Route::post('/productspublic/{productpublic}/delete', [ProductPublicController::class, 'destroy'])
+    ->name('productspublic.delete');
     // ⭐ Productos destacados
     Route::get('/featured', [FeaturedProductController::class, 'index'])->name('featured.index');
     Route::post('/featured/store', [FeaturedProductController::class, 'store'])->name('featured.store');
     Route::put('/featured/{featured}/toggle', [FeaturedProductController::class, 'toggle'])->name('featured.toggle');
     Route::delete('/featured/{featured}', [FeaturedProductController::class, 'destroy'])->name('featured.destroy');
 });
+
 
 /*
 |--------------------------------------------------------------------------

@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
 
-use App\Models\Cita;
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller; 
 use Illuminate\Http\Request;
+use App\Models\Cita;
 use App\Models\DiaDisponible;
 use Carbon\Carbon;
 

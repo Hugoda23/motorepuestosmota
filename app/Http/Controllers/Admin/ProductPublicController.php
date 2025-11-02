@@ -63,15 +63,20 @@ class ProductPublicController extends Controller
             : 'Producto despublicado.');
     }
 
-    public function destroy(ProductPublic $productpublic)
-    {
-        // 🔹 Eliminar imagen si existe
-        if (!empty($productpublic->image) && file_exists(public_path($productpublic->image))) {
-            unlink(public_path($productpublic->image));
-        }
+   public function destroy(Request $request, $id)
+{
+    $productpublic = ProductPublic::findOrFail($id);
 
-        $productpublic->delete();
-
-        return back()->with('success', '🗑️ Producto eliminado correctamente.');
+    if (!empty($productpublic->image) && file_exists(public_path($productpublic->image))) {
+        unlink(public_path($productpublic->image));
     }
+
+    $productpublic->delete();
+
+    return redirect()
+        ->route('admin.productspublic.index')
+        ->with('success', '🗑️ Producto eliminado correctamente.');
+}
+
+
 }
