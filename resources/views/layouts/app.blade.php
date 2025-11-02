@@ -19,18 +19,19 @@
   <!-- Bootstrap Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
-  <!-- Custom Styles via Vite -->
-<!-- Custom Styles -->
-<link rel="stylesheet" href="{{ asset('css/app.css') }}">
-<link rel="stylesheet" href="{{ asset('css/public.css') }}">
-<link rel="stylesheet" href="{{ asset('css/public/categories.css') }}">
-<script src="{{ asset('js/app.js') }}" defer></script>
-<script src="{{ asset('js/categories.js') }}" defer></script>
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/public.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/public/categories.css') }}">
 
+  <!-- ✅ Carga tus scripts de Vite (sin duplicar ckeditor) -->
+  @vite([
+      'resources/js/app.js',
+      'resources/js/categories.js'
+  ])
 
-  <!-- Estilos adicionales de vistas -->
+  <!-- Estilos adicionales -->
   @stack('styles')
-
 
   <style>
     body {
@@ -60,6 +61,7 @@
     }
   </style>
 </head>
+
 <body>
   <div id="app" class="d-flex">
 
@@ -81,7 +83,6 @@
           </button>
 
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ms-auto align-items-center">
               @guest
                 @if (Route::has('login'))
@@ -147,6 +148,12 @@
       document.body.classList.toggle('text-light');
     });
   </script>
+
+  <!-- ✅ CKEditor desde CDN -->
+  <script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/classic/ckeditor.js"></script>
+
+  <!-- ✅ Script de inicialización -->
+  @vite(['resources/js/ckeditor.js'])
 
   @stack('scripts')
 </body>
