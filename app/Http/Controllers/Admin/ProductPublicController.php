@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ProductPublic;
 use App\Models\SubcategoryPublic;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ProductPublicController extends Controller
@@ -28,19 +27,30 @@ class ProductPublicController extends Controller
             'image' => 'nullable|image|max:2048',
         ]);
 
-        //  Generar slug automáticamente
+        // 🔹 Generar slug automáticamente
         $data['slug'] = Str::slug($data['name'], '-');
 
-        // Guardar imagen si se sube
+        // 🔹 Guardar imagen en /public/uploads/productspublic/
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('productspublic', 'public');
+            $filename = time() . '_' . Str::slug(
+                pathinfo($request->file('image')->getClientOriginalName(), PATHINFO_FILENAME)
+            ) . '.' . $request->file('image')->getClientOriginalExtension();
+
+            // Crear directorio si no existe (importante en Hostinger)
+            if (!file_exists(public_path('uploads/productspublic'))) {
+                mkdir(public_path('uploads/productspublic'), 0755, true);
+            }
+
+            // Mover archivo
+            $request->file('image')->move(public_path('uploads/productspublic'), $filename);
+            $data['image'] = 'uploads/productspublic/' . $filename; // ruta accesible por asset()
         }
 
         ProductPublic::create($data);
 
         return redirect()
             ->route('admin.productspublic.index')
-            ->with('success', 'Producto creado correctamente.');
+            ->with('success', '✅ Producto creado correctamente.');
     }
 
     public function togglePublish(ProductPublic $productpublic)
@@ -55,12 +65,13 @@ class ProductPublicController extends Controller
 
     public function destroy(ProductPublic $productpublic)
     {
-        if ($productpublic->image) {
-            Storage::disk('public')->delete($productpublic->image);
+        // 🔹 Eliminar imagen si existe
+        if (!empty($productpublic->image) && file_exists(public_path($productpublic->image))) {
+            unlink(public_path($productpublic->image));
         }
 
         $productpublic->delete();
 
-        return back()->with('success', 'Producto eliminado correctamente.');
+        return back()->with('success', '🗑️ Producto eliminado correctamente.');
     }
 }

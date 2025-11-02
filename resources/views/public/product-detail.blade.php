@@ -6,25 +6,34 @@
     
     <!-- === Encabezado === -->
     <div class="text-center mb-5">
-      <h2 class="fw-bold text-uppercase" style="color:#dc2626;">{{ $product->name }}</h2>
-      <p class="text-muted">{{ $product->subcategorypublic->name ?? '' }}</p>
+      <h2 class="fw-bold text-uppercase text-danger">{{ $product->name }}</h2>
+      <p class="text-muted">
+        <i class="bi bi-diagram-3 me-1 text-danger"></i>
+        {{ $product->subcategorypublic->name ?? '' }}
+      </p>
     </div>
 
     <div class="row align-items-center g-4">
-      <!-- Imagen -->
+      <!-- 🖼️ Imagen principal -->
       <div class="col-md-6 text-center">
-        @if($product->image)
-          <img src="{{ asset('storage/'.$product->image) }}" class="img-fluid rounded shadow" style="max-height:400px; object-fit:cover;">
+        @if($product->image && file_exists(public_path($product->image)))
+          <img src="{{ asset($product->image) }}" 
+               alt="{{ $product->name }}" 
+               class="img-fluid rounded shadow"
+               style="max-height:400px; object-fit:cover;">
         @else
-          <div class="bg-secondary text-white py-5 rounded">Sin imagen disponible</div>
+          <img src="{{ asset('images/no-image.jpg') }}" 
+               alt="Sin imagen" 
+               class="img-fluid rounded shadow"
+               style="max-height:400px; object-fit:cover;">
         @endif
       </div>
 
-      <!-- Información -->
+      <!-- 📋 Información del producto -->
       <div class="col-md-6">
         <div class="card border-0 shadow-sm p-4">
-          <h3 class="fw-bold text-uppercase mb-3" style="color:#dc2626;">{{ $product->name }}</h3>
-          <p class="text-muted">{{ $product->description }}</p>
+          <h3 class="fw-bold text-uppercase mb-3 text-danger">{{ $product->name }}</h3>
+          <p class="text-muted mb-3">{{ $product->description }}</p>
           
           @if($product->features)
             <div class="mt-3">
@@ -34,12 +43,9 @@
           @endif
 
           <div class="mt-4">
-            <a href="javascript:history.back()" class="btn btn-outline-danger me-2">
-              <i class="bi bi-arrow-left"></i> Volver
+            <a href="javascript:history.back()" class="btn btn-outline-danger fw-semibold rounded-pill">
+              <i class="bi bi-arrow-left me-1"></i> Volver
             </a>
-            <button class="btn btn-danger fw-semibold">
-              <i class="bi bi-cart3 me-1"></i> Agregar al carrito
-            </button>
           </div>
         </div>
       </div>
@@ -48,18 +54,25 @@
     <!-- === Productos relacionados === -->
     @if($related->isNotEmpty())
       <div class="mt-5 pt-4 border-top">
-        <h4 class="fw-bold text-uppercase mb-4" style="color:#b91c1c;">Productos Relacionados</h4>
+        <h4 class="fw-bold text-uppercase mb-4 text-danger">
+          <i class="bi bi-grid-3x3-gap-fill me-1"></i> Productos Relacionados
+        </h4>
         <div class="row g-4">
           @foreach($related as $r)
             <div class="col-md-3 col-sm-6">
               <div class="card border-0 shadow-sm hover-card transition h-100">
                 <a href="{{ route('public.product.show', $r->slug) }}" class="text-decoration-none">
-                  @if($r->image)
-                    <img src="{{ asset('storage/'.$r->image) }}" class="card-img-top" style="height:180px; object-fit:cover;">
+                  
+                  {{-- Imagen del producto relacionado --}}
+                  @if($r->image && file_exists(public_path($r->image)))
+                    <img src="{{ asset($r->image) }}" class="card-img-top" style="height:180px; object-fit:cover;">
+                  @else
+                    <img src="{{ asset('images/no-image.jpg') }}" class="card-img-top" style="height:180px; object-fit:cover;">
                   @endif
+                  
                   <div class="card-body text-center">
                     <h6 class="fw-bold text-uppercase text-danger">{{ $r->name }}</h6>
-                    <small class="text-muted">{{ Str::limit($r->description, 50) }}</small>
+                    <small class="text-muted d-block">{{ Str::limit($r->description, 50) }}</small>
                   </div>
                 </a>
               </div>

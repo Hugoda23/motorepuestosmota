@@ -9,7 +9,7 @@
 
     </li>
     <li class="nav-item mb-2">
-      <a href="{{ route('admin.products.index') }}" class="nav-link text-white">
+      <a href="{{ route('admin.productspublic.index') }}" class="nav-link text-white">
         <i class="bi bi-box-seam me-2"></i> Productos
       </a>
     </li>
@@ -20,8 +20,13 @@
       </a>
     </li>
     <li class="nav-item mb-2">
-      <a href="{{ route('admin.categories.index') }}" class="nav-link text-white">
+      <a href="{{ route('admin.categoriespublic.index') }}" class="nav-link text-white">
         <i class="bi bi-tags me-2"></i> Categorías
+      </a>
+    </li>
+     <li class="nav-item mb-2">
+      <a href="{{ route('admin.subcategoriespublic.index') }}" class="nav-link text-white">
+        <i class="bi bi-tags me-2"></i> Subcategoria
       </a>
     </li>
     <li class="nav-item mb-2">

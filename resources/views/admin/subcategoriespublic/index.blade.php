@@ -3,23 +3,25 @@
 @section('content')
 <div class="container py-4">
 
-  <!-- ENCABEZADO -->
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <h2 class="fw-bold mb-0">
-      <i class="bi bi-diagram-3 me-2 text-primary"></i> Subcategorías Públicas
+  <!-- 🔹 ENCABEZADO -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold text-danger text-uppercase mb-0">
+      <i class="bi bi-diagram-3 me-2"></i> Subcategorías Públicas
     </h2>
-    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createSubcategoryModal">
-      <i class="bi bi-plus-circle"></i> Nueva subcategoría
+    <button class="btn btn-danger rounded-pill fw-semibold shadow-sm" data-bs-toggle="modal" data-bs-target="#createSubcategoryModal">
+      <i class="bi bi-plus-circle me-1"></i> Nueva subcategoría
     </button>
   </div>
 
-  <!-- ALERTAS -->
+  <!-- 🔹 ALERTAS -->
   @if(session('success'))
-    <div class="alert alert-success">{{ session('success') }}</div>
+    <div class="alert alert-success shadow-sm">
+      <i class="bi bi-check-circle-fill me-2"></i>{{ session('success') }}
+    </div>
   @endif
 
   @if($errors->any())
-    <div class="alert alert-danger">
+    <div class="alert alert-danger shadow-sm">
       <ul class="mb-0">
         @foreach($errors->all() as $error)
           <li>{{ $error }}</li>
@@ -28,10 +30,12 @@
     </div>
   @endif
 
-  <!-- TABLA -->
-  <div class="table-responsive shadow-sm rounded">
-    <table class="table table-hover align-middle">
-      <thead class="table-dark text-center">
+  <!-- ===============================
+        TABLA DE SUBCATEGORÍAS
+  ================================== -->
+  <div class="table-responsive shadow-sm border rounded-4">
+    <table class="table table-hover align-middle text-center mb-0">
+      <thead class="table-danger">
         <tr>
           <th>ID</th>
           <th>Nombre</th>
@@ -41,46 +45,54 @@
           <th>Acciones</th>
         </tr>
       </thead>
-      <tbody class="text-center">
+      <tbody>
         @forelse($subcategories as $sub)
           <tr>
             <td>{{ $sub->id }}</td>
             <td class="fw-semibold">{{ $sub->name }}</td>
-            <td>{{ $sub->category->name ?? '-' }}</td>
+            <td>{{ $sub->category->name ?? '—' }}</td>
             <td>
-              @if($sub->image)
-                <img src="{{ asset('storage/'.$sub->image) }}" width="70" class="rounded shadow-sm">
+              @if($sub->image && file_exists(public_path($sub->image)))
+                <img src="{{ asset($sub->image) }}" width="70" height="70" class="rounded shadow-sm border object-fit-cover">
               @else
-                <span class="text-muted">Sin imagen</span>
+                <span class="text-muted fst-italic">Sin imagen</span>
               @endif
             </td>
-            <td>{{ Str::limit($sub->description, 40, '...') }}</td>
+            <td>{{ Str::limit($sub->description ?? '—', 50, '...') }}</td>
             <td>
-              <form action="{{ route('admin.subcategoriespublic.destroy', $sub) }}" method="POST" class="d-inline" onsubmit="return confirm('¿Eliminar esta subcategoría?')">
+              <form action="{{ route('admin.subcategoriespublic.destroy', $sub) }}" method="POST" class="d-inline" onsubmit="return confirm('¿Eliminar la subcategoría {{ $sub->name }}?')">
                 @csrf @method('DELETE')
-                <button class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button>
+                <button class="btn btn-sm btn-outline-danger rounded-pill" title="Eliminar">
+                  <i class="bi bi-trash3"></i>
+                </button>
               </form>
             </td>
           </tr>
         @empty
-          <tr><td colspan="6" class="text-muted">No hay subcategorías registradas</td></tr>
+          <tr>
+            <td colspan="6" class="text-muted py-3">
+              <i class="bi bi-inboxes"></i> No hay subcategorías registradas
+            </td>
+          </tr>
         @endforelse
       </tbody>
     </table>
   </div>
 
-  <!-- PAGINACIÓN -->
+  <!-- 🔹 PAGINACIÓN -->
   <div class="mt-3">
     {{ $subcategories->links() }}
   </div>
 </div>
 
-<!-- MODAL: CREAR SUBCATEGORÍA -->
+<!-- ===============================
+        MODAL CREAR SUBCATEGORÍA
+================================= -->
 <div class="modal fade" id="createSubcategoryModal" tabindex="-1" aria-labelledby="createSubcategoryModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered">
-    <div class="modal-content border-0 shadow-lg">
-      <div class="modal-header bg-primary text-white">
-        <h5 class="modal-title" id="createSubcategoryModalLabel">
+    <div class="modal-content border-0 shadow-lg rounded-4">
+      <div class="modal-header bg-danger text-white rounded-top-4">
+        <h5 class="modal-title fw-bold" id="createSubcategoryModalLabel">
           <i class="bi bi-plus-circle me-2"></i> Nueva Subcategoría
         </h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
@@ -100,7 +112,7 @@
             <div class="col-md-6">
               <label for="categorypublic_id" class="form-label fw-semibold">Categoría *</label>
               <select name="categorypublic_id" id="categorypublic_id" class="form-select" required>
-                <option value="">-- Selecciona una categoría --</option>
+                <option value="">Selecciona una categoría...</option>
                 @foreach($categories as $cat)
                   <option value="{{ $cat->id }}">{{ $cat->name }}</option>
                 @endforeach
@@ -110,13 +122,14 @@
             <!-- Descripción -->
             <div class="col-12">
               <label for="description" class="form-label fw-semibold">Descripción</label>
-              <textarea name="description" id="description" rows="3" class="form-control" placeholder="Descripción breve de la subcategoría..."></textarea>
+              <textarea name="description" id="description" rows="3" class="form-control" placeholder="Descripción breve..."></textarea>
             </div>
 
             <!-- Imagen -->
             <div class="col-md-6">
               <label for="image" class="form-label fw-semibold">Imagen</label>
               <input type="file" name="image" id="image" class="form-control" accept="image/*" onchange="previewSubcategoryImage(event)">
+              <small class="text-muted d-block mt-1">Formato JPG o WEBP, máx. 2MB</small>
             </div>
 
             <!-- Vista previa -->
@@ -128,11 +141,11 @@
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          <button type="button" class="btn btn-outline-secondary rounded-pill" data-bs-dismiss="modal">
             <i class="bi bi-x-circle"></i> Cancelar
           </button>
-          <button type="submit" class="btn btn-primary">
-            <i class="bi bi-save me-1"></i> Guardar
+          <button type="submit" class="btn btn-danger rounded-pill fw-semibold">
+            <i class="bi bi-save2 me-1"></i> Guardar
           </button>
         </div>
       </form>

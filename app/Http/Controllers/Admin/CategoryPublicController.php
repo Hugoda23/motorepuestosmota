@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\CategoryPublic;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class CategoryPublicController extends Controller
@@ -24,12 +23,14 @@ class CategoryPublicController extends Controller
             'image' => 'nullable|image|max:2048',
         ]);
 
-        // 🔹 Generar el slug automáticamente desde el nombre
+        // 🔹 Generar el slug automáticamente
         $data['slug'] = Str::slug($data['name'], '-');
 
-        // 🔹 Guardar imagen si se envía
+        // 🔹 Guardar imagen en /public/uploads/categories/
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('categories', 'public');
+            $filename = time() . '_' . Str::slug(pathinfo($request->file('image')->getClientOriginalName(), PATHINFO_FILENAME)) . '.' . $request->file('image')->getClientOriginalExtension();
+            $request->file('image')->move(public_path('uploads/categories'), $filename);
+            $data['image'] = 'uploads/categories/' . $filename; // ruta accesible desde asset()
         }
 
         CategoryPublic::create($data);
@@ -40,18 +41,19 @@ class CategoryPublicController extends Controller
 
     public function destroy(CategoryPublic $categoriespublic)
     {
-        if ($categoriespublic->image) {
-            Storage::disk('public')->delete($categoriespublic->image);
+        // 🔹 Eliminar imagen si existe físicamente
+        if ($categoriespublic->image && file_exists(public_path($categoriespublic->image))) {
+            unlink(public_path($categoriespublic->image));
         }
 
         $categoriespublic->delete();
 
         return back()->with('success', 'Categoría eliminada correctamente.');
     }
-    public function show($id)
-{
-    $category = CategoryPublic::findOrFail($id);
-    return view('admin.categoriespublic.show', compact('category'));
-}
 
+    public function show($id)
+    {
+        $category = CategoryPublic::findOrFail($id);
+        return view('admin.categoriespublic.show', compact('category'));
+    }
 }

@@ -81,13 +81,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/hero/update', [HeroSectionController::class, 'update'])->name('hero.update');
 
     // 🧩 Categorías públicas
-    Route::resource('categories', CategoryPublicController::class)->names('categories');
+Route::resource('categoriespublic', CategoryPublicController::class)->names('categoriespublic');
 
     // 🪪 Subcategorías públicas
-    Route::resource('subcategories', SubcategoryPublicController::class)->names('subcategories');
+    Route::resource('subcategoriespublic', SubcategoryPublicController::class)->names('subcategoriespublic');
 
-    // 🛒 Productos públicos
-    Route::resource('products', ProductPublicController::class)->names('products');
+  // Productos públicos
+Route::resource('productspublic', ProductPublicController::class)->names('productspublic');
+    Route::put('/productspublic/{productpublic}/toggle', [ProductPublicController::class, 'togglePublish'])
+        ->name('productspublic.toggle');
 
     // ⭐ Productos destacados
     Route::get('/featured', [FeaturedProductController::class, 'index'])->name('featured.index');

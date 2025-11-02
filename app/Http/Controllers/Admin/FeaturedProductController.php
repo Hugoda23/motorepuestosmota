@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\FeaturedProduct;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class FeaturedProductController extends Controller
@@ -35,19 +34,20 @@ class FeaturedProductController extends Controller
             'image' => 'nullable|image|max:2048',
         ]);
 
-        // Generar slug automáticamente
+        // 🔹 Generar slug automáticamente
         $data['slug'] = Str::slug($data['title'], '-');
 
-        // Guardar imagen
+        // 🔹 Guardar imagen directamente en /public/uploads/featured/
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('featured', 'public');
+            $filename = time() . '_' . Str::slug(pathinfo($request->file('image')->getClientOriginalName(), PATHINFO_FILENAME)) . '.' . $request->file('image')->getClientOriginalExtension();
+            $request->file('image')->move(public_path('uploads/featured'), $filename);
+            $data['image'] = 'uploads/featured/' . $filename; // ruta accesible por asset()
         }
 
-        // Guardar producto destacado
         FeaturedProduct::create($data);
 
         return redirect()->route('admin.featured.index')
-            ->with('success', 'Producto destacado agregado correctamente.');
+            ->with('success', '✅ Producto destacado agregado correctamente.');
     }
 
     /**
@@ -68,12 +68,13 @@ class FeaturedProductController extends Controller
      */
     public function destroy(FeaturedProduct $featured)
     {
-        if ($featured->image) {
-            Storage::disk('public')->delete($featured->image);
+        // 🔹 Eliminar imagen si existe físicamente
+        if ($featured->image && file_exists(public_path($featured->image))) {
+            unlink(public_path($featured->image));
         }
 
         $featured->delete();
 
-        return back()->with('success', 'Producto destacado eliminado correctamente.');
+        return back()->with('success', '🗑️ Producto destacado eliminado correctamente.');
     }
 }

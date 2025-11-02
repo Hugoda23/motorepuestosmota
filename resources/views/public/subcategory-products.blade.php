@@ -3,53 +3,73 @@
 @section('content')
 <section class="py-5 bg-light border-top border-bottom">
   <div class="container">
-    
+
+    <!-- 🔹 Encabezado -->
     <div class="text-center mb-5">
-      <h2 class="fw-bold text-uppercase" style="color:#dc2626; letter-spacing:1px;">
+      <h2 class="fw-bold text-uppercase text-danger" style="letter-spacing:1px;">
         {{ $subcategory->name }}
       </h2>
-      <p class="text-muted">Categoría: <strong>{{ $category->name }}</strong></p>
+      <p class="text-muted">
+        <i class="bi bi-diagram-3 me-1 text-danger"></i>
+        Categoría: <strong>{{ $category->name }}</strong>
+      </p>
     </div>
 
+    <!-- 🔹 Verificar productos -->
     @if($products->isEmpty())
       <div class="text-center text-muted py-5">
-        <i class="bi bi-box-seam display-6 d-block mb-2"></i>
+        <i class="bi bi-box-seam display-6 d-block mb-3"></i>
         No hay productos publicados en esta subcategoría.
       </div>
     @else
       <div class="row g-4">
         @foreach($products as $p)
-          <div class="col-md-4 col-sm-6">
-            <div class="card shadow-sm border-0 h-100 hover-shadow transition">
-              @if($p->image)
-                <img src="{{ asset('storage/'.$p->image) }}" class="card-img-top" style="height:220px; object-fit:cover;">
-              @endif
-              <div class="card-body">
-                <h5 class="fw-bold text-uppercase" style="color:#dc2626;">{{ $p->name }}</h5>
-                <p class="text-muted small mb-2">{{ Str::limit($p->description, 80) }}</p>
-                @if($p->features)
-                  <p class="small text-secondary"><i class="bi bi-gear me-1"></i>{{ $p->features }}</p>
-                @endif
-                <a href="{{ route('public.product.show', $p->slug) }}" class="btn btn-danger w-100 fw-semibold mt-2">
-  Ver detalles
-</a>
+          <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="card shadow-sm border-0 h-100 transition rounded-4 overflow-hidden hover-shadow">
 
+              {{-- Imagen del producto --}}
+              @if($p->image && file_exists(public_path($p->image)))
+                <img src="{{ asset($p->image) }}" class="card-img-top" style="height:220px; object-fit:cover;">
+              @else
+                <img src="{{ asset('images/no-image.jpg') }}" class="card-img-top" style="height:220px; object-fit:cover;">
+              @endif
+
+              <div class="card-body d-flex flex-column justify-content-between">
+                <div>
+                  <h5 class="fw-bold text-uppercase text-danger mb-2">{{ $p->name }}</h5>
+                  <p class="text-muted small mb-2">{{ Str::limit($p->description, 80) }}</p>
+
+                  @if($p->features)
+                    <p class="small text-secondary mb-0">
+                      <i class="bi bi-gear me-1 text-danger"></i>{{ $p->features }}
+                    </p>
+                  @endif
+                </div>
+
+                <a href="{{ route('public.product.show', $p->slug) }}" 
+                   class="btn btn-outline-danger w-100 fw-semibold mt-3 rounded-pill">
+                   <i class="bi bi-eye me-1"></i> Ver detalles
+                </a>
               </div>
             </div>
           </div>
         @endforeach
       </div>
     @endif
-
   </div>
 </section>
 
 <style>
-.hover-shadow:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-  transition: all 0.3s ease;
-}
-.transition { transition: all 0.3s ease; }
+  .hover-shadow:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+  }
+
+  .transition { transition: all 0.3s ease; }
+
+  @media (max-width: 768px) {
+    .card-img-top { height: 180px !important; }
+  }
 </style>
 @endsection

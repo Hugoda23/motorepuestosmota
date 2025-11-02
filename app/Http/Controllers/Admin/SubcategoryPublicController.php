@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\SubcategoryPublic;
 use App\Models\CategoryPublic;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class SubcategoryPublicController extends Controller
@@ -35,18 +34,29 @@ class SubcategoryPublicController extends Controller
             'image' => 'nullable|image|max:2048',
         ]);
 
-        // Generar slug automáticamente
+        // 🔹 Generar slug automáticamente
         $data['slug'] = Str::slug($data['name'], '-');
 
-        // Guardar imagen si se sube
+        // 🔹 Guardar imagen directamente en /public/uploads/subcategoriespublic/
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('subcategoriespublic', 'public');
+            $filename = time() . '_' . Str::slug(
+                pathinfo($request->file('image')->getClientOriginalName(), PATHINFO_FILENAME)
+            ) . '.' . $request->file('image')->getClientOriginalExtension();
+
+            // Crear carpeta si no existe
+            if (!file_exists(public_path('uploads/subcategoriespublic'))) {
+                mkdir(public_path('uploads/subcategoriespublic'), 0755, true);
+            }
+
+            // Mover archivo
+            $request->file('image')->move(public_path('uploads/subcategoriespublic'), $filename);
+            $data['image'] = 'uploads/subcategoriespublic/' . $filename; // Ruta accesible por asset()
         }
 
         SubcategoryPublic::create($data);
 
         return redirect()->route('admin.subcategoriespublic.index')
-            ->with('success', 'Subcategoría creada correctamente.');
+            ->with('success', '✅ Subcategoría creada correctamente.');
     }
 
     /**
@@ -54,12 +64,13 @@ class SubcategoryPublicController extends Controller
      */
     public function destroy(SubcategoryPublic $subcategorypublic)
     {
-        if ($subcategorypublic->image) {
-            Storage::disk('public')->delete($subcategorypublic->image);
+        // 🔹 Eliminar imagen si existe físicamente
+        if (!empty($subcategorypublic->image) && file_exists(public_path($subcategorypublic->image))) {
+            unlink(public_path($subcategorypublic->image));
         }
 
         $subcategorypublic->delete();
 
-        return back()->with('success', 'Subcategoría eliminada correctamente.');
+        return back()->with('success', '🗑️ Subcategoría eliminada correctamente.');
     }
 }
