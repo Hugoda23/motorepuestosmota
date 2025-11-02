@@ -28,9 +28,6 @@ export default defineConfig({
 
                 // JS base
                 'resources/js/bootstrap.js',
-
-                // CKEditor
-                'resources/js/ckeditor.js',
             ],
             refresh: true,
         }),
@@ -38,9 +35,9 @@ export default defineConfig({
 
     // ⚒️ Compilación en carpetas separadas
     build: {
-    outDir: 'public/build', 
-    manifest: true,
-    emptyOutDir: true,
+        outDir: 'public/build', 
+        manifest: true,
+        emptyOutDir: true,
 
         rollupOptions: {
             output: {

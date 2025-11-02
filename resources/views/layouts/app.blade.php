@@ -24,12 +24,6 @@
   <link rel="stylesheet" href="{{ asset('css/public.css') }}">
   <link rel="stylesheet" href="{{ asset('css/public/categories.css') }}">
 
-  <!-- ✅ Carga tus scripts de Vite (sin duplicar ckeditor) -->
-  @vite([
-      'resources/js/app.js',
-      'resources/js/categories.js'
-  ])
-
   <!-- Estilos adicionales -->
   @stack('styles')
 
@@ -148,12 +142,11 @@
       document.body.classList.toggle('text-light');
     });
   </script>
+<!-- ✅ CKEditor desde CDN -->
+<script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/classic/ckeditor.js"></script>
 
-  <!-- ✅ CKEditor desde CDN -->
-  <script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/classic/ckeditor.js"></script>
-
-  <!-- ✅ Script de inicialización -->
-  @vite(['resources/js/ckeditor.js'])
+<!-- 🧩 Inicialización separada -->
+<script src="{{ asset('js/ckeditor-init.js') }}"></script>
 
   @stack('scripts')
 </body>

@@ -138,10 +138,14 @@
               <textarea name="description" class="form-control" rows="2" placeholder="Detalles del producto..."></textarea>
             </div>
 
-         <div class="col-md-12">
-  <label class="form-label fw-semibold">Características (opcional)</label>
-  <textarea id="featuresEditor" name="features" class="form-control" rows="5"></textarea>
-  <small class="text-muted">Puedes usar formato enriquecido: negritas, listas, enlaces, etc.</small>
+<div class="col-md-12 mb-3">
+  <label for="featuresEditor" class="form-label fw-semibold">Características (opcional)</label>
+  <textarea id="featuresEditor" name="features" class="form-control editor" rows="5">
+    {{ old('features', $product->features ?? '') }}
+  </textarea>
+  <small class="text-muted">
+    Puedes usar formato enriquecido: <strong>negritas</strong>, listas, enlaces, etc.
+  </small>
 </div>
 
             <div class="col-md-6">
