@@ -15,3 +15,18 @@ header.navbar {
 .nav-link:hover {
   color: #dc2626 !important;
 }
+
+.card .small.text-secondary p {
+  margin: 0;
+}
+
+.card .small.text-secondary strong {
+  color: #dc2626; /* rojo principal */
+  font-weight: 600;
+}
+
+.card .small.text-secondary ul,
+.card .small.text-secondary ol {
+  padding-left: 1.2rem;
+  margin-bottom: 0;
+}

@@ -100,3 +100,20 @@ body {
     margin-left: 0;
   }
 }
+
+.product-features, td {
+  font-size: 0.95rem;
+  color: #374151;
+}
+
+.product-features p {
+  margin-bottom: 0.5rem;
+}
+
+.product-features strong {
+  color: #dc2626; /* rojo Honda */
+}
+
+.product-features ul, .product-features ol {
+  padding-left: 1.5rem;
+}

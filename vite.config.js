@@ -28,6 +28,9 @@ export default defineConfig({
 
                 // JS base
                 'resources/js/bootstrap.js',
+
+                // CKEditor
+                'resources/js/ckeditor.js',
             ],
             refresh: true,
         }),

@@ -38,7 +38,7 @@
           @if($product->features)
             <div class="mt-3">
               <h6 class="fw-semibold text-uppercase text-secondary">Características</h6>
-              <p class="mb-0">{{ $product->features }}</p>
+              <div class="product-features">{!! $product->features !!}</div>
             </div>
           @endif
 

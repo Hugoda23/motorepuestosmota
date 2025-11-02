@@ -51,7 +51,8 @@
 
             <td class="fw-semibold">{{ $p->name }}</td>
             <td>{{ $p->subcategorypublic->name ?? '—' }}</td>
-            <td>{{ $p->features ?? '—' }}</td>
+            <td>{!! $p->features ?? '—' !!}</td>
+
 
             <td>
               <span class="badge rounded-pill {{ $p->is_published ? 'bg-success' : 'bg-secondary' }}">

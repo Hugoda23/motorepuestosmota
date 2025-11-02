@@ -40,9 +40,10 @@
                   <p class="text-muted small mb-2">{{ Str::limit($p->description, 80) }}</p>
 
                   @if($p->features)
-                    <p class="small text-secondary mb-0">
-                      <i class="bi bi-gear me-1 text-danger"></i>{{ $p->features }}
-                    </p>
+                    <div class="small text-secondary mb-0">
+  <i class="bi bi-gear me-1 text-danger"></i>{!! $p->features !!}
+</div>
+
                   @endif
                 </div>
 
