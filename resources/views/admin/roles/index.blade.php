@@ -42,9 +42,12 @@
             <td><span class="fw-semibold text-primary">{{ $role->name }}</span></td>
             <td>{{ $role->display_name ?? '—' }}</td>
             <td class="text-center">
-              <button class="btn btn-warning btn-sm text-white me-1" 
-                      data-bs-toggle="modal" 
-                      data-bs-target="#editRoleModal{{ $role->id }}">
+              <button class="btn btn-warning btn-sm text-white me-1 edit-btn"
+                      data-id="{{ $role->id }}"
+                      data-name="{{ $role->name }}"
+                      data-display="{{ $role->display_name }}"
+                      data-bs-toggle="modal"
+                      data-bs-target="#editRoleModal">
                 <i class="bi bi-pencil-square"></i>
               </button>
               <form action="{{ route('admin.roles.destroy', $role->id) }}" 
@@ -59,40 +62,39 @@
               </form>
             </td>
           </tr>
-
-          <!-- 🟨 Modal Editar -->
-          <div class="modal fade" id="editRoleModal{{ $role->id }}" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog">
-              <form action="{{ route('admin.roles.update', $role->id) }}" method="POST" class="modal-content">
-                @csrf
-                @method('PUT')
-                <div class="modal-header bg-warning text-white">
-                  <h5 class="modal-title">Editar Rol</h5>
-                  <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                  <div class="mb-3">
-                    <label class="form-label">Nombre interno</label>
-                    <input type="text" name="name" class="form-control" value="{{ $role->name }}" required>
-                    <small class="text-muted">Ejemplo: admin, empleado, cliente</small>
-                  </div>
-                  <div class="mb-3">
-                    <label class="form-label">Nombre visible</label>
-                    <input type="text" name="display_name" class="form-control" value="{{ $role->display_name }}">
-                    <small class="text-muted">Ejemplo: Administrador</small>
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="submit" class="btn btn-success">Actualizar</button>
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                </div>
-              </form>
-            </div>
-          </div>
           @endforeach
         </tbody>
       </table>
     </div>
+  </div>
+</div>
+
+<!-- 🟨 Modal Editar (reutilizable) -->
+<div class="modal fade" id="editRoleModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <form id="editRoleForm" method="POST" class="modal-content">
+      @csrf
+      @method('PUT')
+      <div class="modal-header bg-warning text-white">
+        <h5 class="modal-title">Editar Rol</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="editRoleId">
+        <div class="mb-3">
+          <label class="form-label">Nombre interno</label>
+          <input type="text" id="editRoleName" name="name" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Nombre visible</label>
+          <input type="text" id="editRoleDisplay" name="display_name" class="form-control">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success">Actualizar</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+      </div>
+    </form>
   </div>
 </div>
 

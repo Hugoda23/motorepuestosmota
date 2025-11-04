@@ -9,24 +9,22 @@
 
   <title>{{ config('app.name', 'Laravel') }}</title>
 
-  <!-- Fonts -->
+  <!-- 🧩 Fonts -->
   <link rel="dns-prefetch" href="//fonts.bunny.net">
   <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
-  <!-- Bootstrap -->
+  <!-- 🧩 Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-  <!-- Bootstrap Icons -->
+  <!-- 🧩 Bootstrap Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
-  <!-- Custom Styles -->
+  <!-- 🧩 Custom Styles -->
   <link rel="stylesheet" href="{{ asset('css/app.css') }}">
   <link rel="stylesheet" href="{{ asset('css/public.css') }}">
   <link rel="stylesheet" href="{{ asset('css/public/categories.css') }}">
 
-  <!-- Estilos adicionales -->
-  @stack('styles')
-
+  <!-- 🎨 Estilos generales -->
   <style>
     body {
       font-family: 'Nunito', sans-serif;
@@ -48,24 +46,37 @@
     .sidebar a {
       color: #e2e8f0;
       text-decoration: none;
+      display: block;
+      padding: 0.75rem 1rem;
+      border-radius: 0.375rem;
+      transition: all 0.2s ease-in-out;
     }
 
     .sidebar a:hover {
       color: #0ea5e9;
+      background-color: rgba(255,255,255,0.05);
+    }
+
+    .sidebar .active {
+      background-color: #0ea5e9;
+      color: #fff;
     }
   </style>
+
+  <!-- 🔥 Estilos adicionales de vistas (roles.css, usuarios.css, etc.) -->
+  @stack('styles')
 </head>
 
 <body>
   <div id="app" class="d-flex">
 
-    <!-- Sidebar -->
+    <!-- 🧭 Sidebar -->
     @include('admin.layouts.navigation')
 
-    <!-- Contenido principal -->
+    <!-- 🧩 Contenido principal -->
     <div class="flex-grow-1" style="margin-left:240px; transition:margin .3s ease;">
 
-      <!-- Navbar superior -->
+      <!-- 🧱 Navbar superior -->
       <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div class="container-fluid">
           <a class="navbar-brand fw-bold text-primary" href="{{ url('/') }}">
@@ -97,7 +108,7 @@
                   <div class="dropdown-menu dropdown-menu-end">
                     <a class="dropdown-item" href="{{ route('logout') }}"
                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                      {{ __('Logout') }}
+                      {{ __('Cerrar sesión') }}
                     </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                       @csrf
@@ -106,7 +117,7 @@
                 </li>
               @endguest
 
-              <!-- Botón de modo oscuro -->
+              <!-- 🌙 Botón de modo oscuro -->
               <li class="nav-item ms-3">
                 <button id="themeToggle" class="btn btn-outline-secondary btn-sm">
                   <i class="bi bi-moon-fill"></i>
@@ -117,14 +128,14 @@
         </div>
       </nav>
 
-      <!-- Contenido dinámico -->
+      <!-- 🧾 Contenido dinámico -->
       <main class="py-4 px-4">
         @yield('content')
       </main>
     </div>
   </div>
 
-  <!-- Bootstrap JS -->
+  <!-- 🧩 Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
   @livewireScripts
@@ -136,18 +147,18 @@
       if (modal) modal.hide();
     });
 
-    // Modo oscuro
+    // 🌗 Modo oscuro básico
     document.getElementById('themeToggle').addEventListener('click', function() {
       document.body.classList.toggle('bg-dark');
       document.body.classList.toggle('text-light');
     });
   </script>
-<!-- ✅ CKEditor desde CDN -->
-<script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/classic/ckeditor.js"></script>
 
-<!-- 🧩 Inicialización separada -->
-<script src="{{ asset('js/ckeditor-init.js') }}"></script>
+  <!-- 📝 CKEditor -->
+  <script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/classic/ckeditor.js"></script>
+  <script src="{{ asset('js/ckeditor-init.js') }}"></script>
 
+  <!-- ⚙️ Scripts adicionales (roles.js, usuarios.js, etc.) -->
   @stack('scripts')
 </body>
 </html>

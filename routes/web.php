@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\DiaDisponibleController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\PromotionController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,11 +69,12 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::put('/usuarios/{user}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/usuarios/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
-    // ⚙️ Roles
-Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
-Route::post('/roles/store', [RoleController::class, 'store'])->name('roles.store');
-Route::put('/roles/{role}', [RoleController::class, 'update'])->name('roles.update');
-Route::delete('/roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
+ // Roles
+    Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
+    Route::post('/roles/store', [RoleController::class, 'store'])->name('roles.store');
+    Route::put('/roles/{role}', [RoleController::class, 'update'])->name('roles.update');
+    Route::delete('/roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
+
 
 
     // 🎯 HERO Section

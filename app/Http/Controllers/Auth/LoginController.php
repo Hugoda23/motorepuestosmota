@@ -14,23 +14,25 @@ class LoginController extends Controller
         return view('auth.login');
     }
 
-    // Procesar login
-    public function login(Request $request)
-    {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
+   // Procesar login
+public function login(Request $request)
+{
+    $credentials = $request->validate([
+        'email' => ['required', 'email'],
+        'password' => ['required'],
+    ]);
 
-        if (Auth::attempt($credentials, $request->filled('remember'))) {
-            $request->session()->regenerate();
-            return redirect()->intended('/')->with('success', 'Bienvenido de nuevo 👋');
-        }
-
-        return back()->withErrors([
-            'email' => 'Las credenciales no coinciden con nuestros registros.',
-        ])->onlyInput('email');
+    if (Auth::attempt($credentials, $request->filled('remember'))) {
+        $request->session()->regenerate();
+        // 🔹 Redirigir al dashboard en lugar de a la raíz
+        return redirect()->intended('/admin')->with('success', 'Bienvenido de nuevo 👋');
     }
+
+    return back()->withErrors([
+        'email' => 'Las credenciales no coinciden con nuestros registros.',
+    ])->onlyInput('email');
+}
+
 
     // Cerrar sesión
     public function logout(Request $request)

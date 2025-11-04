@@ -25,6 +25,8 @@ export default defineConfig({
                 // Administrativos
                 'resources/css/admin.css',
                 'resources/js/admin.js',
+                'resources/css/admin/roles.css',
+                'resources/js/admin/roles.js',
 
                 // JS base
                 'resources/js/bootstrap.js',
