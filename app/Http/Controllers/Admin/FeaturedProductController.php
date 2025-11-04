@@ -22,7 +22,7 @@ class FeaturedProductController extends Controller
     }
 
     /**
-     * Guardar nuevo producto destacado (desde modal)
+     * Guardar nuevo producto destacado
      */
     public function store(Request $request)
     {
@@ -37,44 +37,57 @@ class FeaturedProductController extends Controller
         // 🔹 Generar slug automáticamente
         $data['slug'] = Str::slug($data['title'], '-');
 
-        // 🔹 Guardar imagen directamente en /public/uploads/featured/
+        // 🔹 Guardar imagen en /public/uploads/featured/
         if ($request->hasFile('image')) {
-            $filename = time() . '_' . Str::slug(pathinfo($request->file('image')->getClientOriginalName(), PATHINFO_FILENAME)) . '.' . $request->file('image')->getClientOriginalExtension();
+            $filename = time() . '_' . Str::slug(
+                pathinfo($request->file('image')->getClientOriginalName(), PATHINFO_FILENAME)
+            ) . '.' . $request->file('image')->getClientOriginalExtension();
+
+            // Crear directorio si no existe (necesario en Hostinger)
+            if (!file_exists(public_path('uploads/featured'))) {
+                mkdir(public_path('uploads/featured'), 0755, true);
+            }
+
+            // Mover archivo
             $request->file('image')->move(public_path('uploads/featured'), $filename);
             $data['image'] = 'uploads/featured/' . $filename; // ruta accesible por asset()
         }
 
         FeaturedProduct::create($data);
 
-        return redirect()->route('admin.featured.index')
+        return redirect()
+            ->route('admin.featured.index')
             ->with('success', '✅ Producto destacado agregado correctamente.');
     }
 
     /**
      * Publicar o despublicar un producto destacado
      */
-    public function toggle(FeaturedProduct $featured)
+    public function togglePublish(FeaturedProduct $featured)
     {
         $featured->is_published = !$featured->is_published;
         $featured->save();
 
         return back()->with('success', $featured->is_published
-            ? 'Producto publicado correctamente.'
-            : 'Producto despublicado.');
+            ? 'Producto destacado publicado correctamente.'
+            : 'Producto destacado despublicado.');
     }
 
     /**
      * Eliminar producto destacado
      */
-    public function destroy(FeaturedProduct $featured)
+    public function destroy(Request $request, $id)
     {
-        // 🔹 Eliminar imagen si existe físicamente
-        if ($featured->image && file_exists(public_path($featured->image))) {
+        $featured = FeaturedProduct::findOrFail($id);
+
+        if (!empty($featured->image) && file_exists(public_path($featured->image))) {
             unlink(public_path($featured->image));
         }
 
         $featured->delete();
 
-        return back()->with('success', '🗑️ Producto destacado eliminado correctamente.');
+        return redirect()
+            ->route('admin.featured.index')
+            ->with('success', '🗑️ Producto destacado eliminado correctamente.');
     }
 }

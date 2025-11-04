@@ -3,7 +3,6 @@ import laravel from 'laravel-vite-plugin';
 import path from 'path';
 
 export default defineConfig({
-    // ⚙️ Servidor local (para npm run dev)
     server: {
         host: '0.0.0.0',
         port: 5173,
@@ -13,7 +12,6 @@ export default defineConfig({
 
     plugins: [
         laravel({
-            // Archivos de entrada (todo lo que quieres compilar)
             input: [
                 // Principales
                 'resources/css/app.css',
@@ -21,6 +19,8 @@ export default defineConfig({
 
                 // Públicos
                 'resources/css/public.css',
+                'resources/css/public/destacados.css',
+                'resources/js/public/destacados.js',
 
                 // Administrativos
                 'resources/css/admin.css',
@@ -29,7 +29,7 @@ export default defineConfig({
                 // JS base
                 'resources/js/bootstrap.js',
 
-                 // SECCIÓN PROMOCIONES
+                // SECCIÓN PROMOCIONES
                 'resources/css/public/promociones.css',
                 'resources/js/public/promociones.js',
             ],
@@ -37,15 +37,13 @@ export default defineConfig({
         }),
     ],
 
-    // ⚒️ Compilación en carpetas separadas
     build: {
-        outDir: 'public/build', 
+        outDir: 'public/build',
         manifest: true,
         emptyOutDir: true,
 
         rollupOptions: {
             output: {
-                // Generar archivos separados en css/ y js/
                 entryFileNames: 'js/[name].js',
                 chunkFileNames: 'js/[name].js',
                 assetFileNames: (assetInfo) => {

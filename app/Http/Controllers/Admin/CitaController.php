@@ -13,7 +13,8 @@ class CitaController extends Controller
 {
     public function index()
     {
-        return view('calendario.calendar');
+        return view('admin.calendar.calendar');
+
     }
 
     // ============================================================

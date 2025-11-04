@@ -29,7 +29,7 @@
               <i class="bi bi-bullseye me-2 text-danger"></i>Misión
             </h4>
             <p class="fs-5 lh-base text-secondary">
-              Somos una empresa dedicada a la compra y venta de repuestos y motocicletas, con características de variedad, calidad y economía, proporcionando al cliente la atención y asesoría adecuada para una compra satisfactoria a un precio justo.
+              Somos una empresa dedicada a la venta de repuestos y motocicletas, con características de variedad, calidad y economía, proporcionando al cliente la atención y asesoría adecuada para una compra satisfactoria a un precio justo.
             </p>
           </div>
         </div>

@@ -11,7 +11,8 @@ class DiaDisponibleController extends Controller
     public function index()
     {
         $diasDisponibles = DiaDisponible::orderBy('fecha', 'asc')->get();
-        return view('calendario.dias', compact('diasDisponibles'));
+        return view('admin.calendar.dias', compact('diasDisponibles'));
+
     }
 
     public function store(Request $request)

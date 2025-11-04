@@ -1,8 +1,4 @@
-@extends('layouts.app')
 
-@section('title', 'Página no encontrada')
-
-@section('content')
 <div class="container text-center py-5">
     <h1 class="display-4 text-danger fw-bold">404</h1>
     <h2 class="mb-3">Página no encontrada</h2>
@@ -13,4 +9,4 @@
         <i class="bi bi-house-door"></i> Volver al inicio
     </a>
 </div>
-@endsection
+

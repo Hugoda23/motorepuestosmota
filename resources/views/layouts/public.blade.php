@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="{{ asset('css/public/contact.css') }}">
     <link rel="stylesheet" href="{{ asset('css/public/login.css') }}">
     <link rel="stylesheet" href="{{ asset('css/public/servicios.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/public/destacados.css') }}">
+
 
 
     <!-- =============================

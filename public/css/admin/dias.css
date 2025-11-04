@@ -1,0 +1,30 @@
+/* ============================
+   🎨 Estilos - Días Disponibles
+   ============================ */
+
+h1 {
+  font-weight: 700;
+  color: #0ea5e9;
+}
+
+#diasTable {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+#diasTable thead {
+  background-color: #0284c7;
+  color: #fff;
+}
+
+#diasTable tbody tr:hover {
+  background-color: #f1f5f9;
+}
+
+.btn-edit {
+  font-weight: 600;
+}
+
+.modal-content {
+  border-radius: 1rem;
+}

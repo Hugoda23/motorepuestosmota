@@ -15,7 +15,8 @@
             <div class="alert alert-danger py-2">{{ $errors->first() }}</div>
         @endif
 
-        <form action="{{ route('login.post') }}" method="POST">
+       <form action="{{ route('login.perform') }}" method="POST">
+
             @csrf
             <div class="mb-3">
                 <label class="form-label">Correo electrónico</label>

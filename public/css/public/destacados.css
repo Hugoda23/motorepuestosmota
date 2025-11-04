@@ -1,15 +1,44 @@
+/* 🎯 Sección de productos destacados */
 #destacados {
   background-color: #fff;
 }
 
+/* 🔴 Título principal */
 #destacados h2 {
   color: #dc2626;
 }
 
+/* 🧱 Tarjetas de productos */
 #destacados .card {
-  transition: transform 0.3s ease;
+  border: 1px solid #e5e7eb; /* gris claro por defecto */
+  border-radius: 16px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  background-color: #fff;
 }
 
+/* 🖱️ Efecto hover */
 #destacados .card:hover {
   transform: translateY(-5px);
+  border-color: #dc2626; /* cambia a rojo */
+  box-shadow: 0 8px 20px rgba(220, 38, 38, 0.1);
+}
+
+/* 🖼️ Imagen */
+#destacados .card-img-top {
+  height: 200px;
+  object-fit: contain;
+  background-color: #fff;
+  padding: 10px;
+}
+
+/* 💰 Precio */
+#destacados .card-body .text-success {
+  color: #16a34a !important;
+}
+
+
+#destacados .btn-danger:hover {
+  background-color: #b91c1c;
+  box-shadow: 0 4px 10px rgba(220, 38, 38, 0.3);
 }

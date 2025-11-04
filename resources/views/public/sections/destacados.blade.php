@@ -29,20 +29,26 @@
                   <div class="col-12 col-md-6 col-lg-3">
                     <div class="card h-100 shadow-sm border-0 rounded-4 overflow-hidden position-relative">
 
-                      @if($product->image)
-                        <img src="{{ asset('storage/'.$product->image) }}" class="card-img-top" alt="{{ $product->title }}">
+                      {{-- Imagen del producto --}}
+                      @if($product->image && file_exists(public_path($product->image)))
+                        <img src="{{ asset($product->image) }}" 
+                             alt="{{ $product->title }}" 
+                             class="card-img-top" 
+                             style="height:200px; object-fit:cover;">
                       @else
                         <div class="bg-light d-flex align-items-center justify-content-center" style="height:200px;">
                           <i class="bi bi-image text-muted fs-1"></i>
                         </div>
                       @endif
 
-                      @if($product->old_price)
+                      {{-- Descuento (solo si old_price > price) --}}
+                      @if($product->old_price && $product->old_price > $product->price)
                         <span class="position-absolute top-0 start-0 bg-danger text-white px-2 py-1 rounded-end small">
                           -{{ round(100 - ($product->price * 100 / $product->old_price)) }}%
                         </span>
                       @endif
 
+                      {{-- Contenido --}}
                       <div class="card-body text-center">
                         <h5 class="fw-bold text-uppercase text-danger">{{ $product->title }}</h5>
 
@@ -51,18 +57,16 @@
                         @endif
 
                         <div class="mb-3">
-                          <span class="fw-bold fs-5 text-success">Q{{ number_format($product->price, 2) }}</span>
+                          @if($product->price)
+                            <span class="fw-bold fs-5 text-success">Q{{ number_format($product->price, 2) }}</span>
+                          @endif
+
                           @if($product->old_price)
                             <span class="text-muted text-decoration-line-through small ms-2">
                               Q{{ number_format($product->old_price, 2) }}
                             </span>
                           @endif
                         </div>
-
-                        <a href="{{ route('public.product.show', $product->slug) }}" 
-                           class="btn btn-danger text-white fw-semibold w-100 rounded-pill shadow-sm">
-                           <i class="bi bi-eye me-1"></i> Ver producto
-                        </a>
                       </div>
                     </div>
                   </div>
@@ -83,4 +87,3 @@
 
 <link rel="stylesheet" href="{{ asset('css/public/destacados.css') }}">
 <script src="{{ asset('js/public/destacados.js') }}" defer></script>
-

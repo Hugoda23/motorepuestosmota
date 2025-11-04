@@ -1,0 +1,27 @@
+/* ==============================
+   👥 Estilos - Gestión de Usuarios
+   ============================== */
+
+#usersTable {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+#usersTable thead {
+  background-color: #0ea5e9;
+  color: white;
+}
+
+#usersTable tbody tr:hover {
+  background-color: #f1f5f9;
+  transition: 0.3s;
+}
+
+.btn {
+  font-weight: 500;
+}
+
+.modal-content {
+  border-radius: 1rem;
+  border: none;
+}
