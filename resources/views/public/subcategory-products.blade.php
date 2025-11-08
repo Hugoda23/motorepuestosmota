@@ -46,11 +46,6 @@
 
                   @endif
                 </div>
-
-                <a href="{{ route('public.product.show', $p->slug) }}" 
-                   class="btn btn-outline-danger w-100 fw-semibold mt-3 rounded-pill">
-                   <i class="bi bi-eye me-1"></i> Ver detalles
-                </a>
               </div>
             </div>
           </div>

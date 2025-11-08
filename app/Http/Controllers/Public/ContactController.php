@@ -35,7 +35,7 @@ class ContactController extends Controller
                   "Asunto: {$data['subject']}\n\n".
                   "Mensaje:\n{$data['message']}",
             function ($message) use ($data) {
-                $message->to('admin@tusitio.com', 'Administrador')
+                $message->to('=motorepuestosmota@motorepuestosmota.com', 'Motorepuestos Mota')
                         ->subject('Nuevo mensaje de contacto');
             });
 
