@@ -34,18 +34,12 @@
                 <img src="{{ asset('images/no-image.jpg') }}" class="card-img-top" style="height:220px; object-fit:cover;">
               @endif
 
-              <div class="card-body d-flex flex-column justify-content-between">
-                <div>
-                  <h5 class="fw-bold text-uppercase text-danger mb-2">{{ $p->name }}</h5>
-                  <p class="text-muted small mb-2">{{ Str::limit($p->description, 80) }}</p>
-
-                  @if($p->features)
-                    <div class="small text-secondary mb-0">
-  <i class="bi bi-gear me-1 text-danger"></i>{!! $p->features !!}
-</div>
-
-                  @endif
-                </div>
+              <div class="card-body d-flex flex-column justify-content-between text-center">
+                <h5 class="fw-bold text-uppercase text-danger mb-3">{{ $p->name }}</h5>
+                <a href="{{ route('public.product.show', $p->slug) }}" 
+                   class="btn btn-outline-danger w-100 fw-semibold rounded-pill">
+                   <i class="bi bi-eye me-1"></i> Ver detalles
+                </a>
               </div>
             </div>
           </div>
