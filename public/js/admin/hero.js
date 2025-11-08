@@ -1,18 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("Promociones administrativas activas ✅");
-});
-
-document.addEventListener("DOMContentLoaded", () => {
   const input = document.getElementById("imageInput");
   const preview = document.getElementById("previewImage");
 
   if (input && preview) {
-    input.addEventListener("change", (e) => {
-      const file = e.target.files[0];
+    input.addEventListener("change", (event) => {
+      const file = event.target.files[0];
       if (file) {
         const reader = new FileReader();
-        reader.onload = (event) => {
-          preview.src = event.target.result;
+        reader.onload = (e) => {
+          preview.src = e.target.result;
           preview.classList.remove("d-none");
         };
         reader.readAsDataURL(file);

@@ -5,7 +5,9 @@
   
   <!-- 🔹 Encabezado -->
   <div class="d-flex justify-content-between align-items-center mb-3">
-    <h2 class="fw-bold text-danger"><i class="bi bi-tags-fill me-2"></i> Categorías</h2>
+    <h2 class="fw-bold text-danger">
+      <i class="bi bi-tags-fill me-2"></i> Categorías
+    </h2>
   </div>
 
   <!-- 🔹 Mensaje de éxito -->
@@ -33,7 +35,13 @@
 
           <div class="col-md-4">
             <label class="form-label fw-semibold">Imagen</label>
-            <input type="file" name="image" class="form-control">
+            <input type="file" name="image" class="form-control" id="imageInput">
+            
+            <!-- Vista previa -->
+            <div class="preview-container mt-2 text-center">
+              <img id="previewImage" src="{{ asset('images/no-image.jpg') }}" 
+                   class="preview-img d-none" width="100" height="100" alt="Vista previa">
+            </div>
           </div>
 
           <div class="col-md-4">
@@ -62,7 +70,7 @@
       <table class="table table-hover align-middle mb-0">
         <thead class="table-danger text-center">
           <tr>
-            <th>ID</th>
+            <th>#</th>
             <th>Imagen</th>
             <th>Nombre</th>
             <th>Descripción</th>
@@ -70,9 +78,9 @@
           </tr>
         </thead>
         <tbody class="text-center">
-          @forelse($categories as $cat)
+          @forelse($categories as $index => $cat)
             <tr>
-              <td class="fw-semibold">{{ $cat->id }}</td>
+              <td class="fw-semibold">{{ $categories->firstItem() + $index }}</td>
 
               <td>
                 @if($cat->image && file_exists(public_path($cat->image)))
@@ -86,14 +94,14 @@
               <td>{{ $cat->description ?? '—' }}</td>
 
               <td>
-<form action="{{ route('admin.categoriespublic.destroy', $cat->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar esta categoría?')">
-    @csrf
-    @method('DELETE')
-    <button type="submit" class="btn btn-danger btn-sm">
-        <i class="bi bi-trash"></i> Eliminar
-    </button>
-</form>
-
+                <form action="{{ route('admin.categoriespublic.destroy', $cat->id) }}" method="POST" 
+                      onsubmit="return confirm('¿Estás seguro de eliminar esta categoría?')">
+                  @csrf
+                  @method('DELETE')
+                  <button type="submit" class="btn btn-danger btn-sm">
+                    <i class="bi bi-trash"></i> Eliminar
+                  </button>
+                </form>
               </td>
             </tr>
           @empty
@@ -115,3 +123,11 @@
 
 </div>
 @endsection
+
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/admin/categories.css') }}">
+@endpush
+
+@push('scripts')
+<script src="{{ asset('js/admin/categories.js') }}" defer></script>
+@endpush

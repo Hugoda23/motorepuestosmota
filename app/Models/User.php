@@ -2,19 +2,22 @@
 
 namespace App\Models;
 
+use Laravel\Sanctum\HasApiTokens; 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use NotificationChannels\WebPush\HasPushSubscriptions;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasPushSubscriptions;
 
     protected $fillable = [
         'name',
         'email',
         'password',
+        'role_id', 
     ];
 
     protected $hidden = [
@@ -23,8 +26,7 @@ class User extends Authenticatable
     ];
 
     public function role()
-{
-    return $this->belongsTo(Role::class);
-}
-
+    {
+        return $this->belongsTo(Role::class);
+    }
 }

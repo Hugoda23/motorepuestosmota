@@ -37,7 +37,7 @@
     <table class="table table-hover align-middle text-center mb-0">
       <thead class="table-danger">
         <tr>
-          <th>ID</th>
+          <th>#</th>
           <th>Nombre</th>
           <th>Categoría</th>
           <th>Imagen</th>
@@ -46,9 +46,9 @@
         </tr>
       </thead>
       <tbody>
-        @forelse($subcategories as $sub)
+        @forelse($subcategories as $index => $sub)
           <tr>
-            <td>{{ $sub->id }}</td>
+            <td>{{ $subcategories->firstItem() + $index }}</td>
             <td class="fw-semibold">{{ $sub->name }}</td>
             <td>{{ $sub->category->name ?? '—' }}</td>
             <td>
@@ -60,15 +60,15 @@
             </td>
             <td>{{ Str::limit($sub->description ?? '—', 50, '...') }}</td>
             <td>
-              <form action="{{ route('admin.subcategoriespublic.destroy', $sub->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar esta subcategoría?')">
-    @csrf
-    @method('DELETE')
-    <button type="submit" class="btn btn-danger btn-sm">
-        <i class="bi bi-trash"></i> Eliminar
-    </button>
-</form>
-
-
+              <form action="{{ route('admin.subcategoriespublic.destroy', $sub->id) }}" 
+                    method="POST" 
+                    onsubmit="return confirm('¿Estás seguro de eliminar esta subcategoría?')">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger btn-sm">
+                  <i class="bi bi-trash"></i> Eliminar
+                </button>
+              </form>
             </td>
           </tr>
         @empty
@@ -131,14 +131,15 @@
             <!-- Imagen -->
             <div class="col-md-6">
               <label for="image" class="form-label fw-semibold">Imagen</label>
-              <input type="file" name="image" id="image" class="form-control" accept="image/*" onchange="previewSubcategoryImage(event)">
+              <input type="file" name="image" id="imageInput" class="form-control" accept="image/*">
               <small class="text-muted d-block mt-1">Formato JPG o WEBP, máx. 2MB</small>
             </div>
 
             <!-- Vista previa -->
             <div class="col-md-6 text-center">
               <label class="form-label fw-semibold d-block">Vista previa</label>
-              <img id="previewSubcategory" src="{{ asset('images/placeholder.png') }}" alt="Vista previa" class="img-fluid rounded border" style="max-width: 200px;">
+              <img id="previewImage" src="{{ asset('images/placeholder.png') }}" 
+                   alt="Vista previa" class="preview-img d-none" width="180" height="180">
             </div>
           </div>
         </div>
@@ -155,16 +156,12 @@
     </div>
   </div>
 </div>
-
-<!-- SCRIPT: PREVISUALIZAR IMAGEN -->
-<script>
-function previewSubcategoryImage(event) {
-  const reader = new FileReader();
-  reader.onload = function(){
-    const output = document.getElementById('previewSubcategory');
-    output.src = reader.result;
-  };
-  reader.readAsDataURL(event.target.files[0]);
-}
-</script>
 @endsection
+
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/admin/subcategories.css') }}">
+@endpush
+
+@push('scripts')
+<script src="{{ asset('js/admin/subcategories.js') }}" defer></script>
+@endpush

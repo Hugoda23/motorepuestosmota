@@ -8,7 +8,8 @@
     <h2 class="fw-bold text-danger">
       <i class="bi bi-star-fill me-2"></i> Productos Destacados
     </h2>
-    <button class="btn btn-danger rounded-pill shadow-sm" data-bs-toggle="modal" data-bs-target="#addFeaturedModal">
+    <button class="btn btn-danger rounded-pill shadow-sm"
+            data-bs-toggle="modal" data-bs-target="#addFeaturedModal">
       <i class="bi bi-plus-circle"></i> Agregar producto
     </button>
   </div>
@@ -27,6 +28,7 @@
     <table class="table table-hover align-middle text-center mb-0">
       <thead class="table-danger">
         <tr>
+          <th>#</th>
           <th>Imagen</th>
           <th>Título</th>
           <th>Precio</th>
@@ -35,12 +37,15 @@
         </tr>
       </thead>
       <tbody>
-        @forelse($featured as $item)
+        @forelse($featured as $index => $item)
           <tr>
+            <td>{{ $loop->iteration }}</td>
+
             <!-- Imagen -->
             <td>
               @if($item->image && file_exists(public_path($item->image)))
-                <img src="{{ asset($item->image) }}" width="80" height="80" class="rounded shadow-sm object-fit-cover border">
+                <img src="{{ asset($item->image) }}" width="80" height="80"
+                     class="rounded shadow-sm object-fit-cover border">
               @else
                 <span class="text-muted fst-italic">Sin imagen</span>
               @endif
@@ -86,7 +91,7 @@
           </tr>
         @empty
           <tr>
-            <td colspan="5" class="py-3 text-muted">
+            <td colspan="6" class="py-3 text-muted">
               <i class="bi bi-inboxes"></i> No hay productos destacados.
             </td>
           </tr>
@@ -99,14 +104,13 @@
   <div class="mt-3">
     {{ $featured->links() }}
   </div>
-
 </div>
 
 <!-- ===============================
         MODAL: NUEVO PRODUCTO
 ================================= -->
 <div class="modal fade" id="addFeaturedModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content border-0 shadow-lg rounded-4">
       <div class="modal-header bg-danger text-white rounded-top-4">
         <h5 class="modal-title">
@@ -139,10 +143,18 @@
             </div>
           </div>
 
-          <div class="mb-3">
-            <label class="form-label fw-semibold">Imagen</label>
-            <input type="file" name="image" class="form-control">
-            <small class="text-muted d-block mt-1">Se recomienda formato JPG o WEBP (máx. 2MB)</small>
+          <div class="row align-items-center">
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-semibold">Imagen</label>
+              <input type="file" name="image" id="imageInput" class="form-control" accept="image/*">
+              <small class="text-muted d-block mt-1">Formato JPG o WEBP — Máx. 2MB</small>
+            </div>
+
+            <div class="col-md-6 text-center">
+              <label class="form-label fw-semibold d-block">Vista previa</label>
+              <img id="previewImage" src="{{ asset('images/placeholder.png') }}"
+                   alt="Vista previa" class="preview-img d-none" width="200" height="200">
+            </div>
           </div>
         </div>
 
@@ -159,3 +171,11 @@
   </div>
 </div>
 @endsection
+
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/admin/featured.css') }}">
+@endpush
+
+@push('scripts')
+<script src="{{ asset('js/admin/featured.js') }}" defer></script>
+@endpush

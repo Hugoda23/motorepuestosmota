@@ -13,10 +13,11 @@ class Kernel extends ConsoleKernel
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
-    protected function schedule(Schedule $schedule)
-    {
-        // $schedule->command('inspire')->hourly();
-    }
+   protected function schedule(Schedule $schedule)
+{
+    $schedule->command('reminders:notify')->everyMinute();
+}
+
 
     /**
      * Register the commands for the application.

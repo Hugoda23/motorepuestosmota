@@ -35,36 +35,37 @@
         </tr>
       </thead>
       <tbody>
-        @foreach($users as $u)
-        <tr>
-          <td>{{ $u->id }}</td>
-          <td>{{ $u->name }}</td>
-          <td>{{ $u->email }}</td>
-          <td>
-            <span class="badge bg-info text-dark">
-              {{ $u->role->display_name ?? 'Sin rol' }}
-            </span>
-          </td>
-          <td class="text-center">
-            <button class="btn btn-warning btn-sm text-white btn-edit"
-              data-id="{{ $u->id }}"
-              data-name="{{ $u->name }}"
-              data-email="{{ $u->email }}"
-              data-role="{{ $u->role_id }}">
-              <i class="bi bi-pencil-square"></i>
-            </button>
+       @foreach($users as $index => $u)
+<tr>
+  <td>{{ $index + 1 }}</td> {{-- 🔹 Correlativo dinámico --}}
+  <td>{{ $u->name }}</td>
+  <td>{{ $u->email }}</td>
+  <td>
+    <span class="badge bg-info text-dark">
+      {{ $u->role->display_name ?? 'Sin rol' }}
+    </span>
+  </td>
+  <td class="text-center">
+    <button class="btn btn-warning btn-sm text-white btn-edit"
+      data-id="{{ $u->id }}"
+      data-name="{{ $u->name }}"
+      data-email="{{ $u->email }}"
+      data-role="{{ $u->role_id }}">
+      <i class="bi bi-pencil-square"></i>
+    </button>
 
-            <form action="{{ route('admin.users.destroy', $u) }}" method="POST" class="d-inline"
-              onsubmit="return confirm('¿Eliminar este usuario?')">
-              @csrf
-              @method('DELETE')
-              <button class="btn btn-danger btn-sm">
-                <i class="bi bi-trash3"></i>
-              </button>
-            </form>
-          </td>
-        </tr>
-        @endforeach
+    <form action="{{ route('admin.users.destroy', $u) }}" method="POST" class="d-inline"
+      onsubmit="return confirm('¿Eliminar este usuario?')">
+      @csrf
+      @method('DELETE')
+      <button class="btn btn-danger btn-sm">
+        <i class="bi bi-trash3"></i>
+      </button>
+    </form>
+  </td>
+</tr>
+@endforeach
+
       </tbody>
     </table>
   </div>

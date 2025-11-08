@@ -1,8 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("Promociones administrativas activas ✅");
-});
-
-document.addEventListener("DOMContentLoaded", () => {
   const input = document.getElementById("imageInput");
   const preview = document.getElementById("previewImage");
 
@@ -17,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
         };
         reader.readAsDataURL(file);
       } else {
-        preview.src = "/images/placeholder.png";
+        preview.src = "{{ asset('images/placeholder.png') }}";
         preview.classList.add("d-none");
       }
     });

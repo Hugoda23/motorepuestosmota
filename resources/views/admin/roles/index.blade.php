@@ -29,16 +29,16 @@
       <table class="table table-hover align-middle">
         <thead class="table-light">
           <tr>
-            <th>ID</th>
+            <th>#</th>
             <th>Nombre (interno)</th>
             <th>Nombre visible</th>
             <th class="text-center">Acciones</th>
           </tr>
         </thead>
         <tbody>
-          @foreach ($roles as $role)
+          @foreach ($roles as $index => $role)
           <tr>
-            <td>{{ $role->id }}</td>
+            <td>{{ $index + 1 }}</td>
             <td><span class="fw-semibold text-primary">{{ $role->name }}</span></td>
             <td>{{ $role->display_name ?? '—' }}</td>
             <td class="text-center">

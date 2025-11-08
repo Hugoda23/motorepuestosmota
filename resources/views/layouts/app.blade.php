@@ -160,5 +160,16 @@
 
   <!-- ⚙️ Scripts adicionales (roles.js, usuarios.js, etc.) -->
   @stack('scripts')
+    <!-- 🔐 Variables globales de Laravel para JS -->
+  <script>
+    window.Laravel = {
+      vapidKey: "{{ config('webpush.vapid.public_key') }}",
+      csrfToken: "{{ csrf_token() }}",
+      userId: {{ Auth::check() ? Auth::id() : 'null' }}
+    };
+  </script>
+
+    <!-- ✅ Script que registra Service Worker + recordatorios -->
+  <script src="/js/app.js" defer></script>
 </body>
 </html>

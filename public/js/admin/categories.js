@@ -1,14 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("Promociones administrativas activas ✅");
-});
-
-document.addEventListener("DOMContentLoaded", () => {
   const input = document.getElementById("imageInput");
   const preview = document.getElementById("previewImage");
 
-  if (input && preview) {
+  if (input) {
     input.addEventListener("change", (e) => {
       const file = e.target.files[0];
+
       if (file) {
         const reader = new FileReader();
         reader.onload = (event) => {
@@ -17,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
         };
         reader.readAsDataURL(file);
       } else {
-        preview.src = "/images/placeholder.png";
+        preview.src = "";
         preview.classList.add("d-none");
       }
     });

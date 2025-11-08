@@ -9,12 +9,14 @@
         <i class="bi bi-speedometer2 me-2"></i> Dashboard
       </a>
     </li>
+
     <!-- 👥 Usuarios -->
-<li class="nav-item mb-2">
-  <a href="{{ route('admin.users.index') }}" class="nav-link text-white">
-    <i class="bi bi-people-fill me-2"></i> Usuarios
-  </a>
-</li>
+    <li class="nav-item mb-2">
+      <a href="{{ route('admin.users.index') }}" class="nav-link text-white">
+        <i class="bi bi-people-fill me-2"></i> Usuarios
+      </a>
+    </li>
+
     <!-- 🔹 Gestión de Roles -->
     <li class="nav-item mb-2">
       <a href="{{ route('admin.roles.index') }}" class="nav-link text-white">
@@ -32,6 +34,7 @@
 
       <div class="collapse ps-3 mt-2" id="paginaInicioMenu">
         <ul class="nav flex-column small">
+
           <!-- 🦸‍♂️ Hero -->
           <li class="nav-item mb-1">
             <a href="{{ route('admin.hero.edit') }}" class="nav-link text-white">
@@ -59,12 +62,13 @@
               <i class="bi bi-box-seam me-2"></i> Productos
             </a>
           </li>
-               <!-- ⭐ Productos destacados -->
-      <li class="nav-item mb-1">
-        <a href="{{ route('admin.featured.index') }}" class="nav-link text-white">
-          <i class="bi bi-star-fill me-2 text-warning"></i> Productos destacados
-        </a>
-      </li>
+
+          <!-- ⭐ Productos destacados -->
+          <li class="nav-item mb-1">
+            <a href="{{ route('admin.featured.index') }}" class="nav-link text-white">
+              <i class="bi bi-star-fill me-2 text-warning"></i> Productos destacados
+            </a>
+          </li>
 
           <!-- 🎯 Promociones -->
           <li class="nav-item mb-1">
@@ -98,6 +102,13 @@
           <li class="nav-item mb-1">
             <a href="{{ route('admin.dias-disponibles.index') }}" class="nav-link text-white">
               <i class="bi bi-calendar-check-fill me-2 text-success"></i> Días Disponibles
+            </a>
+          </li>
+
+          <!-- ⏰ Recordatorios -->
+          <li class="nav-item mb-1">
+            <a href="{{ route('admin.reminders.index') }}" class="nav-link text-white">
+              <i class="bi bi-alarm-fill me-2 text-info"></i> Recordatorios
             </a>
           </li>
 

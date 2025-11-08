@@ -14,6 +14,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\PromotionController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\ReminderController; 
 
 /*
 |--------------------------------------------------------------------------
@@ -69,13 +70,11 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::put('/usuarios/{user}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/usuarios/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
- // Roles
+    // 🔐 Roles
     Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
     Route::post('/roles/store', [RoleController::class, 'store'])->name('roles.store');
     Route::put('/roles/{role}', [RoleController::class, 'update'])->name('roles.update');
     Route::delete('/roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
-
-
 
     // 🎯 HERO Section
     Route::get('/hero/edit', [HeroSectionController::class, 'edit'])->name('hero.edit');
@@ -117,6 +116,33 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::put('/dias-disponibles/{id}', [DiaDisponibleController::class, 'update'])->name('dias-disponibles.update');
     Route::delete('/dias-disponibles/{id}', [DiaDisponibleController::class, 'destroy'])->name('dias-disponibles.destroy');
     Route::get('/dias/llenos', [DiaDisponibleController::class, 'diasLlenos'])->name('dias.llenos');
+
+  // 🕒 Recordatorios
+Route::prefix('recordatorios')->name('reminders.')->group(function () {
+
+    // 📅 Vista principal (calendario)
+    Route::get('/', [ReminderController::class, 'index'])->name('index');
+
+    // 🔄 Obtener todos los recordatorios (para FullCalendar)
+    Route::get('/fetch', [ReminderController::class, 'fetch'])->name('fetch');
+
+    // ➕ Crear nuevo recordatorio
+    Route::post('/store', [ReminderController::class, 'store'])->name('store');
+
+    // ✏️ Actualizar recordatorio existente
+    Route::put('/{reminder}', [ReminderController::class, 'update'])->name('update');
+
+    // ❌ Eliminar recordatorio
+    Route::delete('/{reminder}', [ReminderController::class, 'destroy'])->name('destroy');
+
+    // 🔔 Marcar como notificado
+    Route::post('/{reminder}/notified', [ReminderController::class, 'markNotified'])->name('notified');
+
+    // 🔁 Reactivar recordatorio
+    Route::post('/{reminder}/reactivar', [ReminderController::class, 'reactivar'])->name('reactivar');
+});
+
+
 });
 
 
