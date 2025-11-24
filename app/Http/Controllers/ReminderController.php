@@ -18,34 +18,21 @@ class ReminderController extends Controller
 
     /**
      * 🔹 Devuelve todos los recordatorios del usuario autenticado
+     *     (SIN colores, solo los datos necesarios para FullCalendar)
      */
-  public function fetch()
-{
-    $reminders = Reminder::where('user_id', Auth::id())
-        ->get(['id', 'title', 'remind_at as start', 'description', 'notified']);
+    public function fetch()
+    {
+        $reminders = Reminder::where('user_id', Auth::id())
+            ->get([
+                'id',
+                'title',
+                'remind_at as start',
+                'description',
+                'notified'
+            ]);
 
-    $now = now();
-
-    // Agregar color dinámico según estado
-    $reminders = $reminders->map(function ($r) use ($now) {
-        $remindTime = \Carbon\Carbon::parse($r->start);
-
-        if ($r->notified) {
-            $r->color = '#22c55e'; // 🟢 Reactivado (notificado pero reactivado)
-        } elseif ($remindTime->isToday()) {
-            $r->color = '#facc15'; // 🟡 Hoy
-        } elseif ($remindTime->isPast()) {
-            $r->color = '#ef4444'; // 🔴 Pasado
-        } else {
-            $r->color = '#3b82f6'; // 🔵 Futuro (pendiente)
-        }
-
-        return $r;
-    });
-
-    return response()->json($reminders);
-}
-
+        return response()->json($reminders);
+    }
 
     /**
      * 🔹 Crea un nuevo recordatorio
@@ -53,13 +40,13 @@ class ReminderController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'title' => 'required|string|max:255',
+            'title'       => 'required|string|max:255',
             'description' => 'nullable|string',
-            'remind_at' => 'required|date',
+            'remind_at'   => 'required|date',
         ]);
 
-        $data['user_id'] = Auth::id();
-        $data['notified'] = false;
+        $data['user_id']   = Auth::id();
+        $data['notified']  = false;
 
         Reminder::create($data);
 
@@ -71,6 +58,7 @@ class ReminderController extends Controller
 
     /**
      * 🔹 Actualiza un recordatorio existente
+     *     (ahora también acepta "notified" para marcar como notificado o reactivado)
      */
     public function update(Request $request, Reminder $reminder)
     {
@@ -79,9 +67,10 @@ class ReminderController extends Controller
         }
 
         $data = $request->validate([
-            'title' => 'required|string|max:255',
+            'title'       => 'required|string|max:255',
             'description' => 'nullable|string',
-            'remind_at' => 'required|date',
+            'remind_at'   => 'required|date',
+            'notified'    => 'nullable|boolean', // 👈 permite que el JS lo envíe
         ]);
 
         $reminder->update($data);
@@ -110,7 +99,7 @@ class ReminderController extends Controller
     }
 
     /**
-     * 🔹 Marca un recordatorio como notificado (cuando se muestra la notificación)
+     * 🔹 Marca un recordatorio como notificado (si quisieras usarlo vía AJAX)
      */
     public function markNotified(Reminder $reminder)
     {
@@ -125,6 +114,7 @@ class ReminderController extends Controller
 
     /**
      * 🔹 Reactiva un recordatorio (para volver a notificarlo)
+     *     => el JS llama a /reactivar cuando tocas el botón
      */
     public function reactivar(Reminder $reminder)
     {

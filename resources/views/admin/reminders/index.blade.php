@@ -12,21 +12,7 @@
   <!-- 📅 Calendario -->
   <div id="calendar"></div>
 
-  <!-- 🎨 Leyenda de colores -->
-  <div class="mt-4 text-center">
-    <div class="d-inline-block me-3">
-      <span class="badge" style="background-color:#3b82f6;">Pendiente</span>
-    </div>
-    <div class="d-inline-block me-3">
-      <span class="badge" style="background-color:#facc15; color:#000;">Hoy</span>
-    </div>
-    <div class="d-inline-block me-3">
-      <span class="badge" style="background-color:#ef4444;">Vencido</span>
-    </div>
-    <div class="d-inline-block">
-      <span class="badge" style="background-color:#22c55e;">Reactivado</span>
-    </div>
-  </div>
+  <!-- ❌ Eliminado: Leyenda de colores (Pendiente, Hoy, Vencido, Reactivado) -->
 
   <!-- Modal: Crear / Ver / Editar / Reactivar recordatorio -->
   <div class="modal fade" id="reminderModal" tabindex="-1" aria-hidden="true">
@@ -59,6 +45,7 @@
             <input type="datetime-local" name="remind_at" class="form-control" required>
           </div>
 
+          <!-- Solo informativo: si el backend lo maneja -->
           <div class="form-check">
             <input class="form-check-input" type="checkbox" name="notified" id="notifiedCheck" disabled>
             <label class="form-check-label" for="notifiedCheck">Notificado</label>
