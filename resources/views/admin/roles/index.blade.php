@@ -71,7 +71,8 @@
 
 <!-- 🟨 Modal Editar (reutilizable) -->
 <div class="modal fade" id="editRoleModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog">
+ <div class="modal-dialog modal-dialog-centered">
+
     <form id="editRoleForm" method="POST" class="modal-content">
       @csrf
       @method('PUT')
@@ -100,7 +101,8 @@
 
 <!-- 🟩 Modal Crear -->
 <div class="modal fade" id="createRoleModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog">
+<div class="modal-dialog modal-dialog-centered">
+
     <form action="{{ route('admin.roles.store') }}" method="POST" class="modal-content">
       @csrf
       <div class="modal-header bg-primary text-white">

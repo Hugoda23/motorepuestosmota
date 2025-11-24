@@ -17,7 +17,8 @@
      Modal: Crear / Editar Cita
 ========================= -->
 <div class="modal fade" id="modalCita" tabindex="-1" aria-labelledby="modalCitaLabel" aria-hidden="true">
-  <div class="modal-dialog">
+ <div class="modal-dialog modal-dialog-centered">
+
     <form id="formCita">
       @csrf
       <div class="modal-content border-0 shadow-lg">

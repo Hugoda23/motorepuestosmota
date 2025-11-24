@@ -73,7 +73,8 @@
 
 <!-- 🟩 Modal Crear -->
 <div class="modal fade" id="createUserModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog">
+<div class="modal-dialog modal-dialog-centered">
+
     <form action="{{ route('admin.users.store') }}" method="POST" class="modal-content">
       @csrf
       <div class="modal-header bg-primary text-white">
@@ -113,7 +114,8 @@
 
 <!-- 🟦 Modal Editar -->
 <div class="modal fade" id="editUserModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog">
+<div class="modal-dialog modal-dialog-centered">
+
     <form id="editUserForm" method="POST" class="modal-content">
       @csrf
       @method('PUT')

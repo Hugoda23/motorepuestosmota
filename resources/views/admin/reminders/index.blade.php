@@ -16,7 +16,8 @@
 
   <!-- Modal: Crear / Ver / Editar / Reactivar recordatorio -->
   <div class="modal fade" id="reminderModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
+<div class="modal-dialog modal-dialog-centered">
+
       <form id="reminderForm" class="modal-content">
         @csrf
         <div class="modal-header bg-info text-white">
