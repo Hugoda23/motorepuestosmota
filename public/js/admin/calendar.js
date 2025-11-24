@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', function () {
     `;
     alertContainer.appendChild(alert);
 
-    // Ocultar automáticamente después de 4 segundos
     setTimeout(() => {
       alert.classList.remove('show');
       setTimeout(() => alert.remove(), 200);
@@ -41,21 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
       day: 'Día'
     },
 
- // 📅 Cargar citas + días llenos (sin caché)
-events: function(fetchInfo, successCallback, failureCallback) {
-  const antiCache = Date.now(); // 👈 para que siempre sea diferente
-
-  $.when(
-    $.get(RUTA_CITAS_GET,   { _: antiCache }),
-    $.get(RUTA_DIAS_LLENO,  { _: antiCache })
-  ).done(function(citas, diasLlenos) {
-    const eventosCombinados = citas[0].concat(diasLlenos[0]);
-    successCallback(eventosCombinados);
-  }).fail(function() {
-    showAlert('Error al cargar los eventos del calendario.', 'danger');
-  });
-},
-
+    // ❌ YA NO usamos "events: function() {}" aquí
 
     dateClick: function(info) {
       $('#formCita')[0].reset();
@@ -67,13 +52,13 @@ events: function(fetchInfo, successCallback, failureCallback) {
 
     eventClick: function(info) {
       const evento = info.event;
-      const props = evento.extendedProps;
+      const props = evento.extendedProps || {};
 
       $('#cita-id').val(evento.id);
       $('#fecha').val(evento.startStr);
-      $('input[name=nombre]').val(props.nombre);
-      $('input[name=telefono]').val(props.telefono);
-      $('textarea[name=observacion]').val(props.observacion);
+      $('input[name=nombre]').val(props.nombre || '');
+      $('input[name=telefono]').val(props.telefono || '');
+      $('textarea[name=observacion]').val(props.observacion || '');
       $('input[name=hora]').val(props.hora || '');
       $('#btnActualizar, #btnEliminar').show();
       $('#modalCita').modal('show');
@@ -81,14 +66,40 @@ events: function(fetchInfo, successCallback, failureCallback) {
   });
 
   calendar.render();
-    // 🔁 Auto-refresco del calendario cada 10 segundos
-  setInterval(() => {
-    // Solo refresca si la pestaña está visible (para no gastar de más)
-    if (!document.hidden) {
-      calendar.refetchEvents();
-    }
-  }, 10000); // 10000 ms = 10 segundos
 
+  // =========================
+  // 🔁 FUNCIÓN PARA CARGAR EVENTOS (CITAS + DÍAS LLENOS)
+  // =========================
+  function cargarEventos() {
+    const antiCache = Date.now();
+
+    $.when(
+      $.get(RUTA_CITAS_GET,  { _: antiCache }),
+      $.get(RUTA_DIAS_LLENO, { _: antiCache })
+    ).done(function(citas, diasLlenos) {
+      const eventosCombinados = (citas[0] || []).concat(diasLlenos[0] || []);
+
+      // ❌ Borramos todo lo que tiene el calendario
+      calendar.removeAllEvents();
+
+      // ✅ Agregamos los nuevos eventos uno por uno
+      eventosCombinados.forEach(ev => {
+        calendar.addEvent(ev);
+      });
+    }).fail(function() {
+      showAlert('Error al cargar los eventos del calendario.', 'danger');
+    });
+  }
+
+  // 🔃 Cargar eventos al entrar
+  cargarEventos();
+
+  // 🔁 Auto-refresco del calendario cada 10 segundos
+  setInterval(() => {
+    if (!document.hidden) { // solo si la pestaña está visible
+      cargarEventos();
+    }
+  }, 10000); // 10 segundos
 
   // =========================
   // Guardar / Actualizar cita
@@ -104,7 +115,7 @@ events: function(fetchInfo, successCallback, failureCallback) {
       data: $(this).serialize(),
       success: function () {
         $('#modalCita').modal('hide');
-        calendar.refetchEvents();
+        cargarEventos(); // 👈 refrescamos manualmente
         showAlert('Cita guardada correctamente.', 'success');
       },
       error: function (xhr) {
@@ -118,7 +129,6 @@ events: function(fetchInfo, successCallback, failureCallback) {
         } catch {
           showAlert('Error al guardar la cita.', 'danger');
         }
-        // ❌ Eliminado console.error — no más mensajes en consola
       }
     });
   });
@@ -137,12 +147,11 @@ events: function(fetchInfo, successCallback, failureCallback) {
         data: { _token: $('input[name="_token"]').val() },
         success: function () {
           $('#modalCita').modal('hide');
-          calendar.refetchEvents();
+          cargarEventos(); // 👈 refrescamos manualmente
           showAlert('Cita eliminada correctamente.', 'success');
         },
         error: function () {
           showAlert('Error al eliminar la cita.', 'danger');
-          // ❌ Eliminado console.error
         }
       });
     }
