@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\PromotionController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\ReminderController; 
+use App\Http\Controllers\Admin\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,7 +70,10 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::post('/usuarios/store', [UserController::class, 'store'])->name('users.store');
     Route::put('/usuarios/{user}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/usuarios/{user}', [UserController::class, 'destroy'])->name('users.destroy');
-
+  // 👤 Perfil de usuario (configuración)
+    Route::get('/perfil', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/perfil', [ProfileController::class, 'updateProfile'])->name('profile.update');
+    Route::put('/perfil/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
     // 🔐 Roles
     Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
     Route::post('/roles/store', [RoleController::class, 'store'])->name('roles.store');

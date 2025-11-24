@@ -78,5 +78,6 @@
   const RUTA_DIAS_LLENO = "{{ route('admin.dias.llenos') }}";
 </script>
 
-<script src="{{ asset('js/admin/calendar.js') }}" defer></script>
+<script src="{{ asset('js/admin/calendar.js') }}?v=3" defer></script>
+
 @endpush

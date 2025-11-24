@@ -1,131 +1,176 @@
 <!-- resources/views/admin/layouts/navigation.blade.php -->
-<nav class="sidebar bg-dark text-white position-fixed vh-100 p-3" style="width:240px;">
-  <h5 class="text-uppercase mb-4 fw-bold">Admin Panel</h5>
-  <ul class="nav flex-column">
+<nav class="sidebar bg-dark text-white vh-100 p-3" style="width:240px;">
 
-    <!-- 🔹 Dashboard -->
-    <li class="nav-item mb-2">
-      <a href="{{ route('admin.dashboard') }}" class="nav-link text-white">
-        <i class="bi bi-speedometer2 me-2"></i> Dashboard
-      </a>
-    </li>
+  <!-- Encabezado + botón responsive -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h5 class="text-uppercase fw-bold mb-0">Admin Panel</h5>
 
-    <!-- 👥 Usuarios -->
-    <li class="nav-item mb-2">
-      <a href="{{ route('admin.users.index') }}" class="nav-link text-white">
-        <i class="bi bi-people-fill me-2"></i> Usuarios
-      </a>
-    </li>
+    <!-- 🔽 Botón hamburguesa solo en móviles -->
+    <button class="btn btn-outline-light btn-sm d-md-none"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#sidebarMenu"
+            aria-controls="sidebarMenu"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+      <i class="bi bi-list"></i>
+    </button>
+  </div>
 
-    <!-- 🔹 Gestión de Roles -->
-    <li class="nav-item mb-2">
-      <a href="{{ route('admin.roles.index') }}" class="nav-link text-white">
-        <i class="bi bi-person-gear me-2"></i> Roles
-      </a>
-    </li>
+  <!-- Contenido del menú (colapsable en móvil, fijo en desktop) -->
+  <div class="collapse d-md-block" id="sidebarMenu">
+    <ul class="nav flex-column">
 
-    <!-- 🔹 Página de Inicio (submenu) -->
-    <li class="nav-item mb-2">
-      <a class="nav-link text-white d-flex justify-content-between align-items-center" 
-         data-bs-toggle="collapse" href="#paginaInicioMenu" role="button" aria-expanded="false" aria-controls="paginaInicioMenu">
-        <span><i class="bi bi-house-door-fill me-2"></i> Página de Inicio</span>
-        <i class="bi bi-chevron-down small"></i>
-      </a>
+      <!-- 🔹 Dashboard -->
+      <li class="nav-item mb-2">
+        <a href="{{ route('admin.dashboard') }}" class="nav-link text-white">
+          <i class="bi bi-speedometer2 me-2"></i> Dashboard
+        </a>
+      </li>
 
-      <div class="collapse ps-3 mt-2" id="paginaInicioMenu">
-        <ul class="nav flex-column small">
+      <!-- 👥 Usuarios -->
+      <li class="nav-item mb-2">
+        <a href="{{ route('admin.users.index') }}" class="nav-link text-white">
+          <i class="bi bi-people-fill me-2"></i> Usuarios
+        </a>
+      </li>
 
-          <!-- 🦸‍♂️ Hero -->
-          <li class="nav-item mb-1">
-            <a href="{{ route('admin.hero.edit') }}" class="nav-link text-white">
-              <i class="bi bi-image-alt me-2"></i> Hero
-            </a>
-          </li>
+      <!-- 🔹 Gestión de Roles -->
+      <li class="nav-item mb-2">
+        <a href="{{ route('admin.roles.index') }}" class="nav-link text-white">
+          <i class="bi bi-person-gear me-2"></i> Roles
+        </a>
+      </li>
 
-          <!-- 🏷️ Categorías -->
-          <li class="nav-item mb-1">
-            <a href="{{ route('admin.categoriespublic.index') }}" class="nav-link text-white">
-              <i class="bi bi-tags-fill me-2"></i> Categorías
-            </a>
-          </li>
+      <!-- 🔹 Página de Inicio (submenu) -->
+      <li class="nav-item mb-2">
+        <a class="nav-link text-white d-flex justify-content-between align-items-center"
+           data-bs-toggle="collapse" href="#paginaInicioMenu" role="button"
+           aria-expanded="false" aria-controls="paginaInicioMenu">
+          <span><i class="bi bi-house-door-fill me-2"></i> Página de Inicio</span>
+          <i class="bi bi-chevron-down small"></i>
+        </a>
 
-          <!-- 🧩 Subcategorías -->
-          <li class="nav-item mb-1">
-            <a href="{{ route('admin.subcategoriespublic.index') }}" class="nav-link text-white">
-              <i class="bi bi-diagram-3-fill me-2"></i> Subcategorías
-            </a>
-          </li>
+        <div class="collapse ps-3 mt-2" id="paginaInicioMenu">
+          <ul class="nav flex-column small">
 
-          <!-- 📦 Productos -->
-          <li class="nav-item mb-1">
-            <a href="{{ route('admin.productspublic.index') }}" class="nav-link text-white">
-              <i class="bi bi-box-seam me-2"></i> Productos
-            </a>
-          </li>
+            <!-- 🦸‍♂️ Hero -->
+            <li class="nav-item mb-1">
+              <a href="{{ route('admin.hero.edit') }}" class="nav-link text-white">
+                <i class="bi bi-image-alt me-2"></i> Hero
+              </a>
+            </li>
 
-          <!-- ⭐ Productos destacados -->
-          <li class="nav-item mb-1">
-            <a href="{{ route('admin.featured.index') }}" class="nav-link text-white">
-              <i class="bi bi-star-fill me-2 text-warning"></i> Productos destacados
-            </a>
-          </li>
+            <!-- 🏷️ Categorías -->
+            <li class="nav-item mb-1">
+              <a href="{{ route('admin.categoriespublic.index') }}" class="nav-link text-white">
+                <i class="bi bi-tags-fill me-2"></i> Categorías
+              </a>
+            </li>
 
-          <!-- 🎯 Promociones -->
-          <li class="nav-item mb-1">
-            <a href="{{ route('admin.promotions.index') }}" class="nav-link text-white">
-              <i class="bi bi-megaphone-fill me-2 text-warning"></i> Promociones
-            </a>
-          </li>
-        </ul>
-      </div>
-    </li>
+            <!-- 🧩 Subcategorías -->
+            <li class="nav-item mb-1">
+              <a href="{{ route('admin.subcategoriespublic.index') }}" class="nav-link text-white">
+                <i class="bi bi-diagram-3-fill me-2"></i> Subcategorías
+              </a>
+            </li>
 
-    <!-- 🔹 Agenda (submenu) -->
-    <li class="nav-item mb-2">
-      <a class="nav-link text-white d-flex justify-content-between align-items-center" 
-         data-bs-toggle="collapse" href="#agendaMenu" role="button" aria-expanded="false" aria-controls="agendaMenu">
-        <span><i class="bi bi-calendar3 me-2"></i> Agenda</span>
-        <i class="bi bi-chevron-down small"></i>
-      </a>
+            <!-- 📦 Productos -->
+            <li class="nav-item mb-1">
+              <a href="{{ route('admin.productspublic.index') }}" class="nav-link text-white">
+                <i class="bi bi-box-seam me-2"></i> Productos
+              </a>
+            </li>
 
-      <div class="collapse ps-3 mt-2" id="agendaMenu">
-        <ul class="nav flex-column small">
+            <!-- ⭐ Productos destacados -->
+            <li class="nav-item mb-1">
+              <a href="{{ route('admin.featured.index') }}" class="nav-link text-white">
+                <i class="bi bi-star-fill me-2 text-warning"></i> Productos destacados
+              </a>
+            </li>
 
-          <!-- 📅 Citas -->
-          <li class="nav-item mb-1">
-            <a href="{{ route('admin.citas.index') }}" class="nav-link text-white">
-              <i class="bi bi-people-fill me-2"></i> Citas
-            </a>
-          </li>
+            <!-- 🎯 Promociones -->
+            <li class="nav-item mb-1">
+              <a href="{{ route('admin.promotions.index') }}" class="nav-link text-white">
+                <i class="bi bi-megaphone-fill me-2 text-warning"></i> Promociones
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
 
-          <!-- 🗓️ Días Disponibles -->
-          <li class="nav-item mb-1">
-            <a href="{{ route('admin.dias-disponibles.index') }}" class="nav-link text-white">
-              <i class="bi bi-calendar-check-fill me-2 text-success"></i> Días Disponibles
-            </a>
-          </li>
+      <!-- 🔹 Agenda (submenu) -->
+      <li class="nav-item mb-2">
+        <a class="nav-link text-white d-flex justify-content-between align-items-center"
+           data-bs-toggle="collapse" href="#agendaMenu" role="button"
+           aria-expanded="false" aria-controls="agendaMenu">
+          <span><i class="bi bi-calendar3 me-2"></i> Agenda</span>
+          <i class="bi bi-chevron-down small"></i>
+        </a>
 
-          <!-- ⏰ Recordatorios -->
-          <li class="nav-item mb-1">
-            <a href="{{ route('admin.reminders.index') }}" class="nav-link text-white">
-              <i class="bi bi-alarm-fill me-2 text-info"></i> Recordatorios
-            </a>
-          </li>
+        <div class="collapse ps-3 mt-2" id="agendaMenu">
+          <ul class="nav flex-column small">
 
-        </ul>
-      </div>
-    </li>
+            <!-- 📅 Citas -->
+            <li class="nav-item mb-1">
+              <a href="{{ route('admin.citas.index') }}" class="nav-link text-white">
+                <i class="bi bi-people-fill me-2"></i> Citas
+              </a>
+            </li>
 
-    <!-- 🔹 Cerrar Sesión -->
-    <li class="nav-item mt-3">
-      <a href="{{ route('logout') }}" 
-         onclick="event.preventDefault(); document.getElementById('logout-form').submit();" 
-         class="nav-link text-danger fw-semibold">
-        <i class="bi bi-box-arrow-right me-2"></i> Cerrar sesión
-      </a>
-      <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-        @csrf
-      </form>
-    </li>
-  </ul>
+            <!-- 🗓️ Días Disponibles -->
+            <li class="nav-item mb-1">
+              <a href="{{ route('admin.dias-disponibles.index') }}" class="nav-link text-white">
+                <i class="bi bi-calendar-check-fill me-2 text-success"></i> Días Disponibles
+              </a>
+            </li>
+
+            <!-- ⏰ Recordatorios -->
+            <li class="nav-item mb-1">
+              <a href="{{ route('admin.reminders.index') }}" class="nav-link text-white">
+                <i class="bi bi-alarm-fill me-2 text-info"></i> Recordatorios
+              </a>
+            </li>
+
+          </ul>
+        </div>
+      </li>
+
+      <!-- ⚙️ Configuración (submenu) -->
+      <li class="nav-item mb-2">
+        <a class="nav-link text-white d-flex justify-content-between align-items-center"
+           data-bs-toggle="collapse" href="#configMenu" role="button"
+           aria-expanded="false" aria-controls="configMenu">
+          <span><i class="bi bi-gear-fill me-2"></i> Configuración</span>
+          <i class="bi bi-chevron-down small"></i>
+        </a>
+
+        <div class="collapse ps-3 mt-2" id="configMenu">
+          <ul class="nav flex-column small">
+
+            <!-- 👤 Perfil -->
+            <li class="nav-item mb-1">
+              <a href="{{ route('admin.profile.edit') }}" class="nav-link text-white">
+                <i class="bi bi-person-badge me-2"></i> Perfil
+              </a>
+            </li>
+
+          </ul>
+        </div>
+      </li>
+
+      <!-- 🔹 Cerrar Sesión -->
+      <li class="nav-item mt-3">
+        <a href="{{ route('logout') }}"
+           onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+           class="nav-link text-danger fw-semibold">
+          <i class="bi bi-box-arrow-right me-2"></i> Cerrar sesión
+        </a>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+          @csrf
+        </form>
+      </li>
+
+    </ul>
+  </div>
 </nav>
