@@ -41,18 +41,21 @@ document.addEventListener('DOMContentLoaded', function () {
       day: 'Día'
     },
 
-    // 📅 Cargar citas + días llenos
-    events: function(fetchInfo, successCallback, failureCallback) {
-      $.when(
-        $.get(RUTA_CITAS_GET),
-        $.get(RUTA_DIAS_LLENO)
-      ).done(function(citas, diasLlenos) {
-        const eventosCombinados = citas[0].concat(diasLlenos[0]);
-        successCallback(eventosCombinados);
-      }).fail(function() {
-        showAlert('Error al cargar los eventos del calendario.', 'danger');
-      });
-    },
+ // 📅 Cargar citas + días llenos (sin caché)
+events: function(fetchInfo, successCallback, failureCallback) {
+  const antiCache = Date.now(); // 👈 para que siempre sea diferente
+
+  $.when(
+    $.get(RUTA_CITAS_GET,   { _: antiCache }),
+    $.get(RUTA_DIAS_LLENO,  { _: antiCache })
+  ).done(function(citas, diasLlenos) {
+    const eventosCombinados = citas[0].concat(diasLlenos[0]);
+    successCallback(eventosCombinados);
+  }).fail(function() {
+    showAlert('Error al cargar los eventos del calendario.', 'danger');
+  });
+},
+
 
     dateClick: function(info) {
       $('#formCita')[0].reset();
