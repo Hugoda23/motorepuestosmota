@@ -78,6 +78,14 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   calendar.render();
+    // 🔁 Auto-refresco del calendario cada 10 segundos
+  setInterval(() => {
+    // Solo refresca si la pestaña está visible (para no gastar de más)
+    if (!document.hidden) {
+      calendar.refetchEvents();
+    }
+  }, 10000); // 10000 ms = 10 segundos
+
 
   // =========================
   // Guardar / Actualizar cita
