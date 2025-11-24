@@ -1,1 +1,24 @@
 :root{--admin-primary: #0ea5e9;--admin-dark: #0f172a;--admin-light: #f8fafc}body{font-family:Poppins,sans-serif;background-color:var(--admin-light)}.sidebar{width:240px;height:100vh;position:fixed;top:0;left:0;background-color:var(--admin-dark);color:#fff;display:flex;flex-direction:column;transition:all .3s ease}.sidebar .logo{font-size:1.25rem;font-weight:600;color:#fff;text-align:center;padding:1.2rem 0;border-bottom:1px solid rgba(255,255,255,.1)}.sidebar a{color:#cbd5e1;text-decoration:none;display:block;padding:.8rem 1.25rem;font-size:.95rem;transition:all .15s ease}.sidebar a:hover,.sidebar a.active{background-color:#ffffff1a;color:#fff}.admin-content{margin-left:240px;padding:1.5rem;min-height:100vh;background-color:var(--admin-light)}.topbar{position:sticky;top:0;z-index:10;background-color:#fff;border-bottom:1px solid #e2e8f0;padding:.75rem 1rem;display:flex;align-items:center;justify-content:space-between}.topbar h5{font-weight:600;color:var(--admin-dark)}.user-menu i{font-size:1.25rem;color:var(--admin-dark)}.btn-primary{background-color:var(--admin-primary);border-color:var(--admin-primary)}.btn-primary:hover{background-color:#0284c7;border-color:#0284c7}@media (max-width: 991px){.sidebar{width:100%;height:auto;position:relative}.admin-content{margin-left:0}}
+/* ---- MODAL RESPONSIVE PARA TELEFONO ---- */
+@media (max-width: 480px) {
+
+    .modal-panel {
+        position: fixed !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        width: 90% !important;
+        max-width: 90% !important;
+        margin: 0 auto !important;
+        border-radius: 12px !important;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3) !important;
+        z-index: 9999 !important;
+    }
+
+    .modal-panel .modal-content {
+        border-radius: 12px !important;
+    }
+
+    .modal-panel .modal-body {
+        padding: 1rem !important;
+    }
+}
