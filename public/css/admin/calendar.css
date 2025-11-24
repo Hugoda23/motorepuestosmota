@@ -30,3 +30,30 @@
 .modal-content {
   border-radius: 1rem;
 }
+
+/* Ajuste general del modal en pantallas pequeñas */
+@media screen and (max-width: 480px) {
+    .modal-dialog {
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 10px;
+    }
+
+    .modal-content {
+        border-radius: 10px !important;
+        width: 100%;
+    }
+
+    .modal-body {
+        padding: 15px !important;
+    }
+
+    .modal-header {
+        padding: 10px 15px !important;
+    }
+
+    input, textarea, select {
+        font-size: 16px !important;
+    }
+}
